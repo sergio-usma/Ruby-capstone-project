@@ -5,10 +5,6 @@ class App
     @labels = []
   end
 
-  def list_all_books
-    puts 'book list'
-  end
-
   def run
     puts ['Welcome to the Library', '']
     menu_prompt
@@ -27,7 +23,7 @@ class App
 
   def menu_nav(input)
     case input
-    when 1 then puts 'List all books'
+    when 1 then puts 'List all books' && list_all_books
     when 2 then puts 'List all music albums'
     when 3 then puts 'List all movies'
     when 4 then puts 'List all games'
@@ -49,5 +45,9 @@ class App
     puts ['Press Enter to return to the menu', '']
     gets.chomp
     run
+  end
+
+  def list_all_books
+    puts 'List of all books'
   end
 end
