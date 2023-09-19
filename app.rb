@@ -1,5 +1,5 @@
 require_relative 'classes/books'
-require_relative './item'
+require_relative 'item'
 require_relative 'classes/label'
 require_relative 'classes/genre'
 require_relative 'classes/music_album'
@@ -13,8 +13,7 @@ class App
     @labels = []
     @music_albums = []
     @genres = []
-
-end
+  end
 
   def run
     puts ['Welcome to the Library', '']
@@ -94,22 +93,21 @@ end
     publish_date = gets.chomp
     puts 'Is the album on Spotify? (true/false)'
     on_spotify = gets.chomp.downcase == 'true'
-  
+
     # Check if the genre already exists or create a new one
     genre = @genres.find { |g| g.name == genre_name }
     unless genre
       genre = Genre.new(genre_name)
       @genres << genre
-       puts "New genre created: #{genre.name}"
+      puts "New genre created: #{genre.name}"
     end
-  
+
     music_album = MusicAlbum.new(title, author, genre, source, label, publish_date, on_spotify)
     @music_albums << music_album
     genre.add_item(music_album) # Associate the music album with the genre
-  
+
     puts 'Music album added successfully'
   end
-
 
   def list_all_books
     book_counter = 1
@@ -132,7 +130,7 @@ end
     else
       @music_albums.each_with_index do |album, index|
         puts "#{index + 1}. #{album}"
-      end      
+      end
     end
   end
 
