@@ -1,15 +1,16 @@
 require_relative 'item'
-class Book < Item
+class Books < Item
   attr_accessor :publisher, :cover_state
 
-  def initialize(publisher, cover_state, publish_date, archived: false)
-    super(publish_date, archived: archived)
-    @cover_state = cover_state
-    @publisher = publisher
+  def initialize(params = {})
+    super(params)
+    @cover_state = params[:cover_state]
+    @publisher = params[:publisher]
   end
 
+  private
+
   def can_be_archived?
-    archived = super
-    archived || @cover_state == 'bad'
+    super || @cover_state == 'bad'
   end
 end
