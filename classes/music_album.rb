@@ -1,5 +1,7 @@
+require_relative '../item'
+
 class MusicAlbum < Item
-  attr_accessor :title, :author, :on_spotify
+  attr_accessor :title, :on_spotify
 
   def initialize(title, author, genre, source, label, publish_date, on_spotify = false)
     super(genre, author, source, label, publish_date)
