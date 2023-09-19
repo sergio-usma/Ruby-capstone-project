@@ -14,9 +14,7 @@ class App
     @music_albums = []
     @genres = []
 
-    @music_albums << MusicAlbum.new("Sample Album 1", "Sample Artist 1", "Sample Genre 1", "Sample Source 1", "Sample Label 1", "01-01-2022", true)
-    @music_albums << MusicAlbum.new("Sample Album 2", "Sample Artist 2", "Sample Genre 2", "Sample Source 2", "Sample Label 2", "02-02-2022", true)
-  end
+end
 
   def run
     puts ['Welcome to the Library', '']
@@ -65,8 +63,8 @@ class App
   def add_book
     puts 'Enter title'
     title = gets.chomp
-    puts 'Enter artist'
-    artist = gets.chomp
+    puts 'Enter author'
+    author = gets.chomp
     puts 'Enter genre'
     genre = gets.chomp
     puts 'Enter publisher'
@@ -84,8 +82,8 @@ class App
   def add_music_album
     puts 'Enter title'
     title = gets.chomp
-    puts 'Enter artist'
-    artist = gets.chomp
+    puts 'Enter author'
+    author = gets.chomp
     puts 'Enter genre'
     genre_name = gets.chomp
     puts 'Enter source'
@@ -102,9 +100,10 @@ class App
     unless genre
       genre = Genre.new(genre_name)
       @genres << genre
+       puts "New genre created: #{genre.name}"
     end
   
-    music_album = MusicAlbum.new(title, artist, genre, source, label, publish_date, on_spotify)
+    music_album = MusicAlbum.new(title, author, genre, source, label, publish_date, on_spotify)
     @music_albums << music_album
     genre.add_item(music_album) # Associate the music album with the genre
   
@@ -128,15 +127,12 @@ class App
   end
 
   def list_all_music_albums
-    album_counter = 1
     if @music_albums.empty?
       puts 'No music albums found'
     else
-     
-      @music_albums.each do |album|
-        puts "#{album_counter}. Title: #{album.title}, Artist: #{album.artist}"
-        album_counter += 1
-      end
+      @music_albums.each_with_index do |album, index|
+        puts "#{index + 1}. #{album}"
+      end      
     end
   end
 
