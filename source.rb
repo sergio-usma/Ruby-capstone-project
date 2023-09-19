@@ -1,7 +1,7 @@
 require_relative 'item'
 
 class Source
-    attr_accessor :source_name
+  attr_accessor :source_name
   attr_reader :id, :items
 
   def initialize(source_name)
