@@ -1,14 +1,9 @@
-# spec/music_album_spec.rb
-
 require_relative '../classes/music_album'
 require_relative '../classes/genre'
-require 'date' # Required for date parsing
+require 'date'
 
 describe MusicAlbum do
-  # Create a test genre
   let(:genre) { Genre.new('Rock') }
-
-  # Sample data for a music album
   let(:album_data) do
     {
       title: 'Sample Album',
@@ -21,8 +16,6 @@ describe MusicAlbum do
     }
   end
   
-
-  # Create a new instance of MusicAlbum before each test
   let(:album) do
     MusicAlbum.new(
       album_data[:title],
@@ -72,12 +65,12 @@ describe MusicAlbum do
 
   describe '#can_be_archive?' do
     it 'returns true if the album can be archived' do
-      album.publish_date = Date.parse('01-01-2010') # Older than 10 years
+      album.publish_date = Date.parse('01-01-2010')
       expect(album.can_be_archive?).to be(true)
     end
 
     it 'returns false if the album cannot be archived' do
-      album.publish_date = Date.parse('01-01-2022') # Not older than 10 years
+      album.publish_date = Date.parse('01-01-2022')
       expect(album.can_be_archive?).to be(false)
     end
   end
