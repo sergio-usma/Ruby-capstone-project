@@ -1,4 +1,4 @@
-require_relative '../movies/classes/item'
+require_relative '../item'
 
 class Movies < Item
   attr_reader :archived
