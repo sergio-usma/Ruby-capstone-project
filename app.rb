@@ -1,4 +1,15 @@
+require_relative 'classes/books'
+require_relative 'classes/item'
+require_relative 'classes/label'
+
 class App
+  attr_accessor :books, :item, :labels
+
+  def initialize
+    @books = []
+    @labels = []
+  end
+
   def run
     puts ['Welcome to the Library', '']
     menu_prompt
@@ -25,7 +36,7 @@ class App
     when 6 then puts 'List all labels'
     when 7 then puts 'List all authors'
     when 8 then puts 'List all sources'
-    when 9 then puts 'Add a book'
+    when 9 then puts 'Add a book' && add_book
     when 10 then puts 'Add a music album'
     when 11 then puts 'Add a movie'
     when 12 then puts 'Add a game'
@@ -39,5 +50,24 @@ class App
     puts ['Press Enter to return to the menu', '']
     gets.chomp
     run
+  end
+
+  def add_book
+    puts 'Enter title'
+    title = gets.chomp
+    puts 'Enter author'
+    author = gets.chomp
+    puts 'Enter genre'
+    genre = gets.chomp
+    puts 'Enter publisher'
+    publisher = gets.chomp
+    puts 'Enter cover state'
+    cover_state = gets.chomp
+    puts 'Enter publish date in format dd-mm-yyyy'
+    publish_date = gets.chomp
+    book = Books.new(title: title, author: author, genre: genre, publisher: publisher, cover_state: cover_state,
+                     publish_date: publish_date)
+    @books << book
+    puts 'Book added successfully'
   end
 end
