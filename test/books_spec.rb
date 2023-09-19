@@ -1,10 +1,10 @@
 require_relative '../classes/books'
 
-describe Book do
+describe Books do
   let(:publisher) { 'Test' }
   let(:cover_state) { 'Acceptable' }
   let(:publish_date) { '18/09/2023' }
-  let(:book) { Book.new(publisher, cover_state, publish_date) }
+  let(:book) { Books.new(publisher, cover_state, publish_date) }
 
   describe '#initialize' do
     it 'Adds the publisher, cover_state, and publish_date attributes' do
