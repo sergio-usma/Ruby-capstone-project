@@ -26,25 +26,27 @@ class App
     ]
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def menu_nav(input)
     case input
-    when 1 then puts 'List all books' && list_all_books
+    when 1 then puts list_all_books
     when 2 then puts 'List all music albums'
     when 3 then puts 'List all movies'
     when 4 then puts 'List all games'
     when 5 then puts 'List all genres'
-    when 6 then puts 'List all labels' && list_all_labels
+    when 6 then puts list_all_labels
     when 7 then puts 'List all authors'
     when 8 then puts 'List all sources'
-    when 9 then puts 'Add a book' && add_book
+    when 9 then puts add_book
     when 10 then puts 'Add a music album'
     when 11 then puts 'Add a movie'
     when 12 then puts 'Add a game'
-    when 13 then puts 'Exit' && exit
+    when 13 then exit
     else
       puts 'Invalid input'
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def go_back
     puts ['Press Enter to return to the menu', '']
