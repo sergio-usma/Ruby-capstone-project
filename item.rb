@@ -16,11 +16,6 @@ class Item
     @archived = true if can_be_archive?
   end
 
-  def author=(author)
-    @author = author
-    author.items.push(self) unless author.items.include?(self)
-  end
-
   private
 
   def can_be_archive?
