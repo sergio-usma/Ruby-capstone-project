@@ -12,16 +12,17 @@ class Item
       @id = rand(1..1000)
     end
 
-    def can_be_archive?
+    def move_to_archive
+      @archived = true if can_be_archive?
+    end
+
+    private
+    
+    def can_be_archived?
       current_year = Time.now.year
 
       return true if current_year - @publish_date.year > 10
 
       false
     end
-    def move_to_archive
-      @archived = true if can_be_archive?
-    end
-    
-    
 end  
