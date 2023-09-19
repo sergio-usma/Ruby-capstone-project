@@ -13,5 +13,12 @@ class Genre
     end
     def to_s
         "Name: #{@name}"
+    end
+
+      def to_hash
+        {
+          name: @name,
+          items: @items.map(&:to_hash)
+        }
       end
 end
