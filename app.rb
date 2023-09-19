@@ -1,6 +1,9 @@
 require_relative 'classes/books'
-require_relative 'classes/item'
+require_relative './item'
 require_relative 'classes/label'
+require_relative 'classes/genre'
+require_relative 'classes/music_album'
+require 'pry'
 
 class App
   attr_accessor :books, :item, :labels
@@ -8,7 +11,10 @@ class App
   def initialize
     @books = []
     @labels = []
-  end
+    @music_albums = []
+    @genres = []
+
+end
 
   def run
     puts ['Welcome to the Library', '']
@@ -30,15 +36,15 @@ class App
   def menu_nav(input)
     case input
     when 1 then puts list_all_books
-    when 2 then puts 'List all music albums'
+    when 2 then puts list_all_music_albums
     when 3 then puts 'List all movies'
     when 4 then puts 'List all games'
-    when 5 then puts 'List all genres'
+    when 5 then puts list_all_genres
     when 6 then puts list_all_labels
     when 7 then puts 'List all authors'
     when 8 then puts 'List all sources'
     when 9 then puts add_book
-    when 10 then puts 'Add a music album'
+    when 10 then puts add_music_album
     when 11 then puts 'Add a movie'
     when 12 then puts 'Add a game'
     when 13 then exit
@@ -73,6 +79,38 @@ class App
     puts 'Book added successfully'
   end
 
+  def add_music_album
+    puts 'Enter title'
+    title = gets.chomp
+    puts 'Enter author'
+    author = gets.chomp
+    puts 'Enter genre'
+    genre_name = gets.chomp
+    puts 'Enter source'
+    source = gets.chomp
+    puts 'Enter label'
+    label = gets.chomp
+    puts 'Enter publish date in format dd-mm-yyyy'
+    publish_date = gets.chomp
+    puts 'Is the album on Spotify? (true/false)'
+    on_spotify = gets.chomp.downcase == 'true'
+  
+    # Check if the genre already exists or create a new one
+    genre = @genres.find { |g| g.name == genre_name }
+    unless genre
+      genre = Genre.new(genre_name)
+      @genres << genre
+       puts "New genre created: #{genre.name}"
+    end
+  
+    music_album = MusicAlbum.new(title, author, genre, source, label, publish_date, on_spotify)
+    @music_albums << music_album
+    genre.add_item(music_album) # Associate the music album with the genre
+  
+    puts 'Music album added successfully'
+  end
+
+
   def list_all_books
     book_counter = 1
     if @books.empty?
@@ -85,6 +123,26 @@ class App
         Publish date: #{book.publish_date}"
         book_counter += 1
       end; nil
+    end
+  end
+
+  def list_all_music_albums
+    if @music_albums.empty?
+      puts 'No music albums found'
+    else
+      @music_albums.each_with_index do |album, index|
+        puts "#{index + 1}. #{album}"
+      end      
+    end
+  end
+
+  def list_all_genres
+    if @genres.empty?
+      puts 'No genres found'
+    else
+      @genres.each do |genre|
+        puts "Name: #{genre.name}"
+      end
     end
   end
 
