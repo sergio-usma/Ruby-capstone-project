@@ -48,7 +48,7 @@ PLATFORMS
   x64-mingw-ucrt
 
 DEPENDENCIES
-  rspec (~> 3.0)
+  rspec
   rubocop (>= 1.0, < 2.0)
 
 BUNDLED WITH
