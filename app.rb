@@ -1,7 +1,12 @@
+require_relative 'classes/books'
+require_relative 'classes/item'
+require_relative 'classes/label'
+
 class App
+  attr_accessor :books, :item, :labels
+
   def initialize
     @books = []
-    @authors = []
     @labels = []
   end
 
@@ -21,25 +26,27 @@ class App
     ]
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def menu_nav(input)
     case input
-    when 1 then puts 'List all books' && list_all_books
+    when 1 then puts list_all_books
     when 2 then puts 'List all music albums'
     when 3 then puts 'List all movies'
     when 4 then puts 'List all games'
     when 5 then puts 'List all genres'
-    when 6 then puts 'List all labels'
+    when 6 then puts list_all_labels
     when 7 then puts 'List all authors'
     when 8 then puts 'List all sources'
-    when 9 then puts 'Add a book'
+    when 9 then puts add_book
     when 10 then puts 'Add a music album'
     when 11 then puts 'Add a movie'
     when 12 then puts 'Add a game'
-    when 13 then puts 'Exit'
+    when 13 then exit
     else
       puts 'Invalid input'
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def go_back
     puts ['Press Enter to return to the menu', '']
@@ -47,7 +54,47 @@ class App
     run
   end
 
+  def add_book
+    puts 'Enter title'
+    title = gets.chomp
+    puts 'Enter author'
+    author = gets.chomp
+    puts 'Enter genre'
+    genre = gets.chomp
+    puts 'Enter publisher'
+    publisher = gets.chomp
+    puts 'Enter cover state'
+    cover_state = gets.chomp
+    puts 'Enter publish date in format dd-mm-yyyy'
+    publish_date = gets.chomp
+    book = Books.new(title: title, author: author, genre: genre, publisher: publisher, cover_state: cover_state,
+                     publish_date: publish_date)
+    @books << book
+    puts 'Book added successfully'
+  end
+
   def list_all_books
-    puts 'List of all books'
+    book_counter = 1
+    if @books.empty?
+      puts 'No books found'
+    else
+      @books.each do |book|
+        puts "#{book_counter}.
+        Publisher: \"#{book.publisher}\",
+        Cover state: #{book.cover_state} ,
+        Publish date: #{book.publish_date}"
+        book_counter += 1
+      end; nil
+    end
+  end
+
+  def list_all_labels
+    if @labels.empty?
+      puts 'No labels found'
+    else
+      @labels.each do |label|
+        puts "Title: #{label.title}, Color: #{label.color}"
+      end
+    end
   end
 end
