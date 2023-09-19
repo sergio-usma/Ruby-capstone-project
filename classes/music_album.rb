@@ -1,8 +1,8 @@
 class MusicAlbum < Item
-  attr_accessor :title, :artist, :on_spotify
+  attr_accessor :title, :author, :on_spotify
 
-  def initialize(title, artist, genre, source, label, publish_date, on_spotify = false)
-    super(genre, artist, source, label, publish_date)
+  def initialize(title, author, genre, source, label, publish_date, on_spotify = false)
+    super(genre, author, source, label, publish_date)
 
     @title = title
     @on_spotify = on_spotify
@@ -10,5 +10,10 @@ class MusicAlbum < Item
 
   def can_be_archived?
     super && @on_spotify
-  end
+  end  
+
+  def to_s
+    "Title: #{@title}, Artist: #{@author}"
+  end  
+  
 end
