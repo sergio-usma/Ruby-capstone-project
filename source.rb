@@ -1,4 +1,4 @@
 require_relative 'item'
 
-class Source 
+class Source
 end
