@@ -6,4 +6,8 @@ class Movies
     super(args[:genre], args[:author], args[:source], args[:label], args[:publish_date])
     @silent = args[:silent]
   end
+
+  def can_be_archived?
+    super && @silent == true
+  end
 end
