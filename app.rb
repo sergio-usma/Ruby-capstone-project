@@ -33,7 +33,7 @@ class App
     when 3 then puts 'List all movies'
     when 4 then puts 'List all games'
     when 5 then puts 'List all genres'
-    when 6 then puts 'List all labels'
+    when 6 then puts 'List all labels' && list_all_labels
     when 7 then puts 'List all authors'
     when 8 then puts 'List all sources'
     when 9 then puts 'Add a book' && add_book
@@ -83,6 +83,16 @@ class App
         Publish date: #{book.publish_date}"
         book_counter += 1
       end; nil
+    end
+  end
+
+  def list_all_labels
+    if @labels.empty?
+      puts 'No labels found'
+    else
+      @labels.each do |label|
+        puts "Title: #{label.title}, Color: #{label.color}"
+      end
     end
   end
 end
