@@ -28,7 +28,7 @@ class App
 
   def menu_nav(input)
     case input
-    when 1 then puts 'List all books'
+    when 1 then puts 'List all books' && list_all_books
     when 2 then puts 'List all music albums'
     when 3 then puts 'List all movies'
     when 4 then puts 'List all games'
@@ -69,5 +69,20 @@ class App
                      publish_date: publish_date)
     @books << book
     puts 'Book added successfully'
+  end
+
+  def list_all_books
+    book_counter = 1
+    if @books.empty?
+      puts 'No books found'
+    else
+      @books.each do |book|
+        puts "#{book_counter}.
+        Publisher: \"#{book.publisher}\",
+        Cover state: #{book.cover_state} ,
+        Publish date: #{book.publish_date}"
+        book_counter += 1
+      end; nil
+    end
   end
 end
