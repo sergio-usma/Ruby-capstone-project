@@ -1,11 +1,12 @@
-require_relative '../movies/classes/item'
+require_relative '../item'
 
 class Movies < Item
   attr_reader :archived
   attr_accessor :silent
 
-  def initialize(args)
-    super(args[:genre], args[:author], args[:source], args[:label], args[:publish_date])
+  def initialize(args = {})
+    super(args)
+    @source = args[:source]
     @silent = args[:silent]
   end
 
@@ -16,7 +17,7 @@ class Movies < Item
   def to_hash
     {
       'genre' => {
-        'genre_name' => @genre.genre_name
+        'genre_name' => @genre.name
       },
       'author' => {
         'first_name' => @author.first_name,
