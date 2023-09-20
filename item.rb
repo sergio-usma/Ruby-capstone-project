@@ -26,4 +26,3 @@ class Item
     false
   end
 end
-
