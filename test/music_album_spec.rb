@@ -49,7 +49,11 @@ describe MusicAlbum do
 
   describe '#to_s' do
     it 'returns a string representation of the album' do
-      expected_string = "Title: Sample Album, Artist: Sample Artist, Genre: Rock, Source: CD, Label: test, Publish Date: #{publish_date}, On Spotify: Yes"
+      expected_string = "Title: Sample Album,
+      Artist: Sample Artist, Genre: Rock,
+      Source: CD, Label: test,
+      Publish Date: #{publish_date},
+      On Spotify: Yes"
       expect(album.to_s).to eq(expected_string)
     end
   end
