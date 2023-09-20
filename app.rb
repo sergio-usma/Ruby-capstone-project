@@ -8,9 +8,10 @@ require 'fileutils'
 
 require_relative 'classes/movies/movies'
 require_relative 'classes/movies/preserve_movies'
-require_relative 'classes/preserve_sources'
+require_relative 'classes/movies/preserve_sources'
 require_relative 'classes/author'
 require_relative 'classes/source'
+# rubocop:disable all
 
 class App
   attr_accessor :books, :item, :labels
@@ -106,11 +107,11 @@ class App
   end
 
   def load_movies
-    @movies = PreserveMovies.new.gets_movies || []
+    @movies = @preserve_movies.gets_movies || []
   end
 
   def load_sources
-    @sources = PreserveSources.new.gets_sources || []
+    @sources = @preserve_sources.gets_sources || []
   end
 
   def menu_prompt
@@ -121,7 +122,6 @@ class App
     ]
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
   def menu_nav(input)
     case input
     when 1 then puts list_all_books
@@ -219,7 +219,7 @@ class App
         Cover state: #{book.cover_state} ,
         Publish date: #{book.publish_date}"
         book_counter += 1
-      end; nil
+      end
     end
   end
 
@@ -251,9 +251,7 @@ class App
 
     genre = Genre.new(genre_name)
 
-
     first_name, last_name = author_name.split
-
     author = Author.new(first_name, last_name)
 
     source = Source.new(source_name)
@@ -275,7 +273,6 @@ class App
 
     new_movie = Movies.new(movie_args)
     @movies << new_movie
-
     @preserve_movies.save_movies(@movies)
 
     puts 'Movie added successfully!'
@@ -287,7 +284,7 @@ class App
     else
       puts "\nMovies:"
       puts '-' * 80
-      puts "%-5s %-30s %-20s %-15s %-15s %-10s" % ["Index", "Title", "Director", "Genre", "Release Date", "Silent"]
+      puts '%-5s %-30s %-20s %-15s %-15s %-10s' % ["Index", "Title", "Director", "Genre", "Release Date", "Silent"]
       puts '-' * 80
 
       @movies.each_with_index do |movie, index|
@@ -350,3 +347,4 @@ class App
     end
   end
 end
+# rubocop:enable all
