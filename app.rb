@@ -3,6 +3,7 @@ require_relative 'classes/item'
 require_relative 'classes/label'
 require_relative 'classes/genre'
 require_relative 'classes/music_album'
+require_relative 'classes/game'
 require 'json'
 require 'fileutils'
 
@@ -15,6 +16,7 @@ class App
     @labels = []
     @music_albums = []
     @genres = []
+    @games = []
     load_data
   end
 
@@ -146,6 +148,50 @@ class App
                      publish_date: publish_date)
     @books << book
     puts 'Book added successfully'
+  end
+
+  def add_game
+    puts 'Enter title'
+    title = gets.chomp
+    puts 'Enter first author\'s name'
+    first_author_name = gets.chomp
+    puts 'Enter second author\'s name'
+    second_author_name = gets.chomp
+    puts 'Enter genre'
+    genre = gets.chomp
+    puts 'Enter source'
+    source = gets.chomp
+    puts 'Enter label'
+    label = gets.chomp
+    puts 'Enter publish date'
+    publish_date = gets.chomp
+    puts 'Is the game multiplayer? (true/false)'
+    multiplayer = gets.chomp.downcase == 'true'
+    puts 'Last time played? (dd/mm/yy)'
+    last_played_at = gets.chomp
+
+    genre = @genres.find { |g| g.name == genre_name }
+    unless genre
+      genre = Genre.new(genre_name)
+      @genres << genre
+      puts "New genre created: #{genre.name}"
+    end
+
+    game_params = {
+      title: title,
+      first_author_name: first_author_name,
+      second_author_name: second_author_name,
+      genre: genre,
+      source: source,
+      label: label,
+      publish_date: publish_date,
+      multiplayer: multiplayer,
+      last_played_at: last_played_at
+    }
+
+    game = Game.new(game_params)
+    @games << game
+    puts 'Game created successfully'
   end
 
   def add_music_album
