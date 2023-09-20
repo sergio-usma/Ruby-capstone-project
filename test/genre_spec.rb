@@ -19,7 +19,16 @@ describe Genre do
 
   describe '#add_item' do
     it 'associates an item with the genre' do
-      album = MusicAlbum.new('Test Album', 'Test Artist', genre, 'CD', 'Test Label', Date.parse('01-01-2020'), true)
+        album_data = {
+        title: 'Test Album',
+        author: 'Test Artist',
+        genre: genre,
+        source: 'CD',
+        label: 'Test Label',
+        publish_date: Date.parse('2020-01-01').to_s,
+        on_spotify: true
+      }
+      album = MusicAlbum.new(album_data)
 
       genre.add_item(album)
 
@@ -27,7 +36,16 @@ describe Genre do
     end
 
     it 'adds an item to the genre\'s items collection' do
-      album = MusicAlbum.new('Test Album', 'Test Artist', genre, 'CD', 'Test Label', Date.parse('01-01-2020'), true)
+        album_data = {
+        title: 'Test Album',
+        author: 'Test Artist',
+        genre: genre,
+        source: 'CD',
+        label: 'Test Label',
+        publish_date: Date.parse('2020-01-01').to_s,
+        on_spotify: true
+      }
+      album = MusicAlbum.new(album_data)
 
       genre.add_item(album)
 
