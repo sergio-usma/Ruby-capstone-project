@@ -9,7 +9,7 @@ describe Game do
   let(:genre) { Genre.new('Indie') }
   let(:source) { Source.new('Ludum Dare') }
   let(:label) { Label.new('Hollow Knight', 'Black') }
-  let(:game_data) do 
+  let(:game_data) do
     {
       author: author,
       genre: genre,
@@ -21,7 +21,7 @@ describe Game do
     }
   end
 
-  let(:game) do 
+  let(:game) do
     Game.new(
       game_data[:author],
       game_data[:genre],
@@ -29,7 +29,7 @@ describe Game do
       game_data[:label],
       game_data[:publish_date],
       game_data[:last_played_at],
-      game_data[:multiplayer],
+      game_data[:multiplayer]
     )
   end
 
