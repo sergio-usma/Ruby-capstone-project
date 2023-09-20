@@ -15,7 +15,7 @@ describe MusicAlbum do
       on_spotify: true
     }
   end
-  
+
   let(:album) do
     MusicAlbum.new(
       album_data[:title],
@@ -27,7 +27,6 @@ describe MusicAlbum do
       album_data[:on_spotify]
     )
   end
-  
 
   describe '#initialize' do
     it 'creates a new MusicAlbum object' do
