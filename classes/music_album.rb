@@ -1,13 +1,12 @@
-require_relative '../item'
+require_relative 'item'
 
 class MusicAlbum < Item
   attr_accessor :title, :on_spotify
 
-  def initialize(title, author, genre, source, label, publish_date, on_spotify: false)
-    super(genre, author, source, label, publish_date)
-
-    @title = title
-    @on_spotify = on_spotify
+  def initialize(params = {})
+    super(params)
+    @title = params[:title]
+    @on_spotify = params[:on_spotify] || false
   end
 
   def can_be_archived?
@@ -15,19 +14,19 @@ class MusicAlbum < Item
   end
 
   def to_s
-    "Title: #{@title}, Artist: #{@author}"
-  end 
+    "Title: #{@title}, Artist: #{@author}, Genre: #{@genre}, Source: #{@source}, Label: #{@label}, Publish Date: #{@publish_date}, On Spotify: #{@on_spotify ? 'Yes' : 'No'}"
+  end
+  
 
   def to_hash
     {
       title: @title,
       author: @author,
-      genre: @genre.name,
+      genre: @genre,
       source: @source,
       label: @label,
       publish_date: @publish_date,
       on_spotify: @on_spotify
     }
-  end
   end
 end
