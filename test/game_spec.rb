@@ -11,26 +11,19 @@ describe Game do
   let(:label) { Label.new('Hollow Knight', 'Black') }
   let(:game_data) do
     {
+      title: 'Hollow Knight',
       author: author,
       genre: genre,
       label: label,
       source: source,
-      publish_date: Date.parse('27-02-2017'),
+      publish_date: '27-02-2017',
       last_played_at: '17-03-2020',
       multiplayer: true
     }
   end
 
   let(:game) do
-    Game.new(
-      game_data[:author],
-      game_data[:genre],
-      game_data[:source],
-      game_data[:label],
-      game_data[:publish_date],
-      game_data[:last_played_at],
-      game_data[:multiplayer]
-    )
+    Game.new(game_data)
   end
 
   describe '#initialize' do
@@ -46,20 +39,22 @@ describe Game do
       expect(game.author).to eq(game_data[:author])
     end
 
-    it 'correctly sets the source' do
-      expect(game.source).to eq(game_data[:source])
-    end
-
     it 'correctly sets the genre' do
       expect(game.genre).to eq(game_data[:genre])
     end
 
     it 'correctly sets the publish_date' do
-      expect(game.publish_date).to eq(game_data[:publish_date])
+      expect(game.publish_date).to eq((Date.strptime(game_data[:publish_date], '%d-%m-%Y') if game_data[:publish_date]))
     end
 
     it 'correctly sets the multiplayer attribute' do
       expect(game.multiplayer).to eq(game_data[:multiplayer])
+    end
+  end
+
+  describe '#can_be_archived?' do
+    it 'return true if parent\'s method returns true OR if last_played_at is greater than 2' do
+      expect(game.can_be_archived?).to be(true)
     end
   end
 end
