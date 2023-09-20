@@ -13,7 +13,7 @@ describe MusicAlbum do
       author: 'Sample Artist',
       genre: 'Rock',
       source: 'CD',
-      label: "test",
+      label: 'test',
       publish_date: publish_date.to_s,
       on_spotify: true
     }
@@ -59,9 +59,9 @@ describe MusicAlbum do
       expected_hash = {
         title: 'Sample Album',
         author: 'Sample Artist',
-        genre: "Rock",
+        genre: 'Rock',
         source: 'CD',
-        label: "test",
+        label: 'test',
         publish_date: publish_date,
         on_spotify: true
       }
