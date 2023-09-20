@@ -3,7 +3,6 @@ require_relative 'classes/item'
 require_relative 'classes/label'
 require_relative 'classes/genre'
 require_relative 'classes/music_album'
-require 'pry'
 require 'json'
 require 'fileutils'
 
@@ -67,8 +66,17 @@ class App
 
     @genres = JSON.parse(json_data).map do |genre_data|
       genre = Genre.new(genre_data['name'])
+
       genre_data['items'].each do |item_data|
+        item = Item.new(
+          title: item_data['title'],
+          author: item_data['author'],
+          genre: genre
+        )
+
+        genre.add_item(item)
       end
+
       genre
     end
   end
@@ -173,7 +181,6 @@ class App
       publish_date: publish_date,
       on_spotify: on_spotify
     }
-    binding.pry
     music_album = MusicAlbum.new(music_album_params)
     @music_albums << music_album
     genre.add_item(music_album)
