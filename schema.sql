@@ -15,3 +15,32 @@ CREATE TABLE genres (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255)
 );
+
+CREATE TABLE Movies (
+    item_id INT PRIMARY KEY,
+    director VARCHAR(255),
+    release_date DATE,
+    silent BOOLEAN,
+    FOREIGN KEY (item_id) REFERENCES Item(id)
+);
+
+
+CREATE TABLE Sources (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    url VARCHAR(255),
+    item_id INT,
+    FOREIGN KEY (item_id) REFERENCES Item(id)
+);
+
+
+ALTER TABLE Item
+ADD COLUMN director VARCHAR(255),
+ADD COLUMN release_date DATE,
+ADD COLUMN silent BOOLEAN;
+
+
+ALTER TABLE Item
+ADD FOREIGN KEY (director) REFERENCES Movies(director),
+ADD FOREIGN KEY (release_date) REFERENCES Movies(release_date),
+ADD FOREIGN KEY (silent) REFERENCES Movies(silent);
