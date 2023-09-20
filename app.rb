@@ -158,7 +158,7 @@ class App
     puts 'Enter second author\'s name'
     second_author_name = gets.chomp
     puts 'Enter genre'
-    genre = gets.chomp
+    gets.chomp
     puts 'Enter source'
     source = gets.chomp
     puts 'Enter label'
