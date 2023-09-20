@@ -6,6 +6,12 @@ require_relative 'classes/music_album'
 require 'json'
 require 'fileutils'
 
+require_relative 'classes/movies/movies'
+require_relative 'classes/movies/preserve_movies'
+require_relative 'classes/preserve_sources'
+require_relative 'classes/author'
+require_relative 'classes/source'
+
 class App
   attr_accessor :books, :item, :labels
 
@@ -15,12 +21,18 @@ class App
     @labels = []
     @music_albums = []
     @genres = []
+    @movies = []
+    @preserve_movies = PreserveMovies.new
+    @sources = []
+    @preserve_sources = PreserveSources.new
     load_data
   end
 
   def load_data
     load_music_albums
     load_genres
+    load_movies
+    load_sources
   end
 
   def save_data
@@ -93,6 +105,14 @@ class App
     go_back unless input == 13
   end
 
+  def load_movies
+    @movies = PreserveMovies.new.gets_movies || []
+  end
+
+  def load_sources
+    @sources = PreserveSources.new.gets_sources || []
+  end
+
   def menu_prompt
     puts [
       '1 - List all books', '2 - List all music albums', '3 - List all movies', '4 - List of games',
@@ -106,15 +126,15 @@ class App
     case input
     when 1 then puts list_all_books
     when 2 then puts list_all_music_albums
-    when 3 then puts 'List all movies'
+    when 3 then puts list_all_movies
     when 4 then puts 'List all games'
     when 5 then puts list_all_genres
     when 6 then puts list_all_labels
     when 7 then puts 'List all authors'
-    when 8 then puts 'List all sources'
+    when 8 then puts list_all_sources
     when 9 then puts add_book
     when 10 then puts add_music_album
-    when 11 then puts 'Add a movie'
+    when 11 then puts add_a_movie
     when 12 then puts 'Add a game'
     when 13 then exit
     else
@@ -200,6 +220,100 @@ class App
         Publish date: #{book.publish_date}"
         book_counter += 1
       end; nil
+    end
+  end
+
+  def add_a_movie
+    puts 'Enter movie title:'
+    title = gets.chomp
+    puts 'Enter movie genre:'
+    genre_name = gets.chomp
+    puts 'Enter movie author:'
+    author_name = gets.chomp
+    puts 'Enter movie source:'
+    source_name = gets.chomp
+    puts 'Enter movie label:'
+    label = gets.chomp
+    puts 'Enter movie publish date in format dd-mm-yyyy:'
+    publish_date = gets.chomp
+    puts 'Is the movie silent? (Y/N):'
+    silent_input = gets.chomp.downcase
+
+    silent = case silent_input
+             when 'y'
+               true
+             when 'n'
+               false
+             else
+               puts "Invalid input for silent. Assuming 'N'."
+               false
+             end
+
+    genre = Genre.new(genre_name)
+
+
+    first_name, last_name = author_name.split
+
+    author = Author.new(first_name, last_name)
+
+    source = Source.new(source_name)
+
+    unless @sources.include?(source)
+      @sources << source
+      @preserve_sources.save_sources(@sources)
+    end
+
+    movie_args = {
+      title: title,
+      genre: genre,
+      author: author,
+      source: Source.new(source_name),
+      label: label,
+      publish_date: publish_date,
+      silent: silent
+    }
+
+    new_movie = Movies.new(movie_args)
+    @movies << new_movie
+
+    @preserve_movies.save_movies(@movies)
+
+    puts 'Movie added successfully!'
+  end
+
+  def list_all_movies
+    if @movies.empty?
+      puts "\nSorry, you haven't added any movies yet"
+    else
+      puts "\nMovies:"
+      puts '-' * 80
+      puts "%-5s %-30s %-20s %-15s %-15s %-10s" % ["Index", "Title", "Director", "Genre", "Release Date", "Silent"]
+      puts '-' * 80
+
+      @movies.each_with_index do |movie, index|
+        title = movie.label.respond_to?(:title) ? movie.label.title : "Unknown"
+        artist = "#{movie.author.first_name} #{movie.author.last_name}"
+        genre = movie.genre.respond_to?(:genre_name) ? movie.genre.genre_name : "Unknown"
+        release_date = movie.publish_date.nil? ? 'Unknown' : movie.publish_date.to_s
+        silent = movie.silent ? 'Yes' : 'No'
+
+        puts "%-5d %-30s %-20s %-15s %-15s %-10s" % [index + 1, title, artist, genre, release_date, silent]
+      end
+    end
+  end
+
+  def list_all_sources
+    if @sources.empty?
+      puts "\nSorry, you haven't added any sources yet"
+    else
+      puts "\nSources:"
+      puts '-' * 80
+      puts "%-5s %-30s" % ["Index", "Source Name"]
+      puts '-' * 80
+
+      @sources.each_with_index do |source, index|
+        puts "%-5d %-30s" % [index + 1, source.source_name]
+      end
     end
   end
 
