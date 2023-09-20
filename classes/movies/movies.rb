@@ -27,8 +27,8 @@ class Movies < Item
         'source_name' => @source.source_name
       },
       'label' => {
-        'title' => @label.title,
-        'color' => @label.color
+        'title' => @label.respond_to?(:title) ? @label.title : @label.to_s,
+        'color' => @label.respond_to?(:color) ? @label.color : nil
       },
       'publish_date' => @publish_date,
       'silent' => @silent
