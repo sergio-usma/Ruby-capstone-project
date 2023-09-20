@@ -19,7 +19,7 @@ describe Genre do
 
   describe '#add_item' do
     it 'associates an item with the genre' do
-        album_data = {
+      album_data = {
         title: 'Test Album',
         author: 'Test Artist',
         genre: genre,
@@ -36,7 +36,7 @@ describe Genre do
     end
 
     it 'adds an item to the genre\'s items collection' do
-        album_data = {
+      album_data = {
         title: 'Test Album',
         author: 'Test Artist',
         genre: genre,
