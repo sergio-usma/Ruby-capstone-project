@@ -28,7 +28,6 @@ describe MusicAlbum do
     )
   end
 
-
   describe '#initialize' do
     it 'creates a new MusicAlbum object' do
       expect(album).to be_a(MusicAlbum)
