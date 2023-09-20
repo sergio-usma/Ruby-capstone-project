@@ -16,7 +16,7 @@ class MusicAlbum < Item
 
   def to_s
     "Title: #{@title}, Artist: #{@author}"
-  end 
+  end
 
   def to_hash
     {
@@ -28,6 +28,5 @@ class MusicAlbum < Item
       publish_date: @publish_date,
       on_spotify: @on_spotify
     }
-  end
   end
 end
