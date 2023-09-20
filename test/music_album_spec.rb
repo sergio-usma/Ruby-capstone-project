@@ -1,32 +1,25 @@
-require_relative '../classes/music_album'
+require_relative '../classes/item'
 require_relative '../classes/genre'
+require_relative '../classes/music_album'
+
 require 'date'
 
 describe MusicAlbum do
-  let(:genre) { Genre.new('Rock') }
+  let(:publish_date) { Date.parse('2010-01-01') }
+
   let(:album_data) do
     {
       title: 'Sample Album',
       author: 'Sample Artist',
-      genre: genre,
+      genre: 'Rock',
       source: 'CD',
-      label: 'Sample Label',
-      publish_date: Date.parse('01-01-2020'),
+      label: "test",
+      publish_date: publish_date.to_s,
       on_spotify: true
     }
   end
 
-  let(:album) do
-    MusicAlbum.new(
-      album_data[:title],
-      album_data[:author],
-      album_data[:genre],
-      album_data[:source],
-      album_data[:label],
-      album_data[:publish_date],
-      album_data[:on_spotify]
-    )
-  end
+  let(:album) { MusicAlbum.new(album_data) }
 
   describe '#initialize' do
     it 'creates a new MusicAlbum object' do
@@ -37,40 +30,42 @@ describe MusicAlbum do
       expect(album.title).to eq(album_data[:title])
     end
 
-    it 'correctly sets the author' do
-      expect(album.author).to eq(album_data[:author])
-    end
-
-    it 'correctly sets the genre' do
-      expect(album.genre).to eq(album_data[:genre])
-    end
-
-    it 'correctly sets the source' do
-      expect(album.source).to eq(album_data[:source])
-    end
-
-    it 'correctly sets the label' do
-      expect(album.label).to eq(album_data[:label])
-    end
-
-    it 'correctly sets the publish_date' do
-      expect(album.publish_date).to eq(album_data[:publish_date])
-    end
-
     it 'correctly sets the on_spotify attribute' do
       expect(album.on_spotify).to eq(album_data[:on_spotify])
     end
   end
 
-  describe '#can_be_archive?' do
+  describe '#can_be_archived?' do
     it 'returns true if the album can be archived' do
       album.publish_date = Date.parse('01-01-2010')
-      expect(album.can_be_archive?).to be(true)
+      expect(album.can_be_archived?).to be(true)
     end
 
     it 'returns false if the album cannot be archived' do
-      album.publish_date = Date.parse('01-01-2022')
-      expect(album.can_be_archive?).to be(false)
+      album.on_spotify = false
+      expect(album.can_be_archived?).to be(false)
+    end
+  end
+
+  describe '#to_s' do
+    it 'returns a string representation of the album' do
+      expected_string = "Title: Sample Album, Artist: Sample Artist, Genre: Rock, Source: CD, Label: test, Publish Date: #{publish_date}, On Spotify: Yes"
+      expect(album.to_s).to eq(expected_string)
+    end
+  end
+
+  describe '#to_hash' do
+    it 'returns a hash representation of the album' do
+      expected_hash = {
+        title: 'Sample Album',
+        author: 'Sample Artist',
+        genre: "Rock",
+        source: 'CD',
+        label: "test",
+        publish_date: publish_date,
+        on_spotify: true
+      }
+      expect(album.to_hash).to eq(expected_hash)
     end
   end
 end
