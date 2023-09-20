@@ -3,10 +3,10 @@ require_relative 'source'
 
 class PreserveSources
   def gets_sources
-    return [] unless File.exist?('./classes/sources.json')
+    return [] unless File.exist?('./data/sources.json')
 
     sources = []
-    file = File.read('./classes/sources.json')
+    file = File.read('./data/sources.json')
     return [] if file.empty?
 
     sources_data = JSON.parse(file)
@@ -20,7 +20,7 @@ class PreserveSources
     return if sources.empty?
 
     sources_data = { sources: sources.map(&:source_name) }
-    File.open('./classes/sources.json', 'w') do |file|
+    File.open('./data/sources.json', 'w') do |file|
       file.puts(JSON.generate(sources_data))
     end
   end
