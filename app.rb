@@ -4,15 +4,66 @@ require_relative 'classes/label'
 require_relative 'classes/genre'
 require_relative 'classes/music_album'
 require 'pry'
+require 'json'
+require 'fileutils'
 
 class App
   attr_accessor :books, :item, :labels
 
   def initialize
+    FileUtils.mkdir_p('./data')
     @books = []
     @labels = []
     @music_albums = []
     @genres = []
+    load_data
+end
+def load_data
+  load_music_albums
+  load_genres
+end
+
+def save_data
+  save_music_albums
+  save_genres
+end
+def load_music_albums
+  if File.exist?('./data/music_albums.json')
+    json_data = File.read('./data/music_albums.json')
+    unless json_data.empty?
+      @music_albums = JSON.parse(json_data).map do |album_data|
+        MusicAlbum.new(**album_data)
+      end
+    end
+  end
+end
+
+def save_music_albums
+  File.open('./data/music_albums.json', 'w') do |file|
+    file.write(JSON.pretty_generate(@music_albums.map(&:to_hash)))
+  end
+end
+
+def load_genres
+  if File.exist?('./data/genres.json')
+    json_data = File.read('./data/genres.json')
+    unless json_data.empty?
+      @genres = JSON.parse(json_data).map do |genre_data|
+        genre = Genre.new(genre_data['name'])
+        genre_data['items'].each do |item_data|
+        end
+        genre
+      end
+    end
+  end
+end
+
+
+def save_genres
+  File.open('./data/genres.json', 'w') do |file|
+    file.write(JSON.pretty_generate(@genres.map(&:to_hash)))
+  end
+end
   end
 
   def run
@@ -104,9 +155,9 @@ class App
 
     music_album = MusicAlbum.new(title, author, genre, source, label, publish_date, on_spotify)
     @music_albums << music_album
-    genre.add_item(music_album) # Associate the music album with the genre
-
+    genre.add_item(music_album)
     puts 'Music album added successfully'
+    save_data
   end
 
   def list_all_books
