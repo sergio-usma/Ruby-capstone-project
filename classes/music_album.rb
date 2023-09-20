@@ -14,7 +14,13 @@ class MusicAlbum < Item
   end
 
   def to_s
-    "Title: #{@title}, Artist: #{@author}, Genre: #{@genre}, Source: #{@source}, Label: #{@label}, Publish Date: #{@publish_date}, On Spotify: #{@on_spotify ? 'Yes' : 'No'}"
+    "Title: #{@title},
+    Artist: #{@author},
+    Genre: #{@genre},
+    Source: #{@source},
+    Label: #{@label},
+    Publish Date: #{@publish_date},
+    On Spotify: #{@on_spotify ? 'Yes' : 'No'}"
   end
 
   def to_hash
