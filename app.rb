@@ -1,9 +1,8 @@
 require_relative 'classes/books'
-require_relative 'item'
+require_relative 'classes/item'
 require_relative 'classes/label'
 require_relative 'classes/genre'
 require_relative 'classes/music_album'
-require 'pry'
 require 'json'
 require 'fileutils'
 
@@ -17,53 +16,73 @@ class App
     @music_albums = []
     @genres = []
     load_data
-end
-def load_data
-  load_music_albums
-  load_genres
-end
+  end
 
-def save_data
-  save_music_albums
-  save_genres
-end
-def load_music_albums
-  if File.exist?('./data/music_albums.json')
+  def load_data
+    load_music_albums
+    load_genres
+  end
+
+  def save_data
+    save_music_albums
+    save_genres
+  end
+
+  def load_music_albums
+    return unless File.exist?('./data/music_albums.json')
+
     json_data = File.read('./data/music_albums.json')
-    unless json_data.empty?
-      @music_albums = JSON.parse(json_data).map do |album_data|
-        MusicAlbum.new(**album_data)
+    return if json_data.empty?
+
+    album_data_array = JSON.parse(json_data)
+
+    # Ensure album_data_array is an array of hashes
+    if album_data_array.is_a?(Array) && album_data_array.all? { |album_data| album_data.is_a?(Hash) }
+      @music_albums = album_data_array.map do |album_data|
+        MusicAlbum.new(
+          title: album_data['title'],
+          author: album_data['author'],
+          genre: album_data['genre'],
+          source: album_data['source'],
+          label: album_data['label'],
+          publish_date: album_data['publish_date'],
+          on_spotify: album_data['on_spotify']
+        )
       end
+    else
+      puts 'Invalid JSON data format in the file.'
     end
   end
-end
 
-def save_music_albums
-  File.open('./data/music_albums.json', 'w') do |file|
-    file.write(JSON.pretty_generate(@music_albums.map(&:to_hash)))
+  def save_music_albums
+    File.write('./data/music_albums.json', JSON.pretty_generate(@music_albums.map(&:to_hash)))
   end
-end
 
-def load_genres
-  if File.exist?('./data/genres.json')
+  def load_genres
+    return unless File.exist?('./data/genres.json')
+
     json_data = File.read('./data/genres.json')
-    unless json_data.empty?
-      @genres = JSON.parse(json_data).map do |genre_data|
-        genre = Genre.new(genre_data['name'])
-        genre_data['items'].each do |item_data|
-        end
-        genre
+    return if json_data.empty?
+
+    @genres = JSON.parse(json_data).map do |genre_data|
+      genre = Genre.new(genre_data['name'])
+
+      genre_data['items'].each do |item_data|
+        item = Item.new(
+          title: item_data['title'],
+          author: item_data['author'],
+          genre: genre
+        )
+
+        genre.add_item(item)
       end
+
+      genre
     end
   end
-end
 
-
-def save_genres
-  File.open('./data/genres.json', 'w') do |file|
-    file.write(JSON.pretty_generate(@genres.map(&:to_hash)))
-  end
-end
+  def save_genres
+    File.write('./data/genres.json', JSON.pretty_generate(@genres.map(&:to_hash)))
   end
 
   def run
@@ -153,7 +172,16 @@ end
       puts "New genre created: #{genre.name}"
     end
 
-    music_album = MusicAlbum.new(title, author, genre, source, label, publish_date, on_spotify)
+    music_album_params = {
+      title: title,
+      author: author,
+      genre: genre,
+      source: source,
+      label: label,
+      publish_date: publish_date,
+      on_spotify: on_spotify
+    }
+    music_album = MusicAlbum.new(music_album_params)
     @music_albums << music_album
     genre.add_item(music_album)
     puts 'Music album added successfully'
@@ -179,9 +207,11 @@ end
     if @music_albums.empty?
       puts 'No music albums found'
     else
-      @music_albums.each_with_index do |album, index|
-        puts "#{index + 1}. #{album}"
+      formatted_albums = @music_albums.each_with_index.map do |album, index|
+        "#{index + 1}. #{album}"
       end
+
+      puts formatted_albums.join("\n")
     end
   end
 
@@ -189,9 +219,10 @@ end
     if @genres.empty?
       puts 'No genres found'
     else
-      @genres.each do |genre|
-        puts "Name: #{genre.name}"
+      formatted_genres = @genres.each_with_index.map do |genre, index|
+        "#{index + 1}. Name: #{genre.name}"
       end
+      puts formatted_genres.join("\n")
     end
   end
 
