@@ -122,7 +122,6 @@ class App
     ]
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
   def menu_nav(input)
     case input
     when 1 then puts list_all_books
