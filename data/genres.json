@@ -5,10 +5,10 @@
       {
         "title": "a",
         "author": "s",
-        "genre": "d",
-        "source": "f",
+        "genre": "Name: d",
+        "source": null,
         "label": "g",
-        "publish_date": "10-10-1222",
+        "publish_date": "1001-10-10",
         "on_spotify": true
       }
     ]
