@@ -1,12 +1,16 @@
 require_relative '../classes/movies/movies'
 require_relative '../classes/item'
 require_relative '../classes/source'
+require_relative '../classes/genre'
+require_relative '../classes/author'
+require_relative '../classes/label'
 
 describe Movies do
-
+  let(:genre) { Genre.new('Action') }
+  let(:author) { Author.new('Lawrence', 'Kioko') }
   let(:source) { Source.new('DVD') }
   let(:label) { Label.new('Movie Title', 'Red') }
-  let(:publish_date) { 2010 }
+  let(:publish_date) { '01-01-2010' }
 
   subject(:movie) do
     described_class.new(
@@ -28,7 +32,7 @@ describe Movies do
 
     context 'when the movie cannot be archived' do
       it 'returns false' do
-        movie.silent = false
+        movie.silent = false # Set silent to false for this test case
         expect(movie.can_be_archived?).to be(false)
       end
     end
@@ -41,7 +45,7 @@ describe Movies do
         'author' => { 'first_name' => 'Lawrence', 'last_name' => 'Kioko' },
         'source' => { 'source_name' => 'DVD' },
         'label' => { 'title' => 'Movie Title', 'color' => 'Red' },
-        'publish_date' => 2010,
+        'publish_date' => Date.new(2010, 1, 1),
         'silent' => true
       }
 
