@@ -2,15 +2,19 @@
   {
     "name": "d",
     "items": [
-      {
-        "title": "a",
-        "author": "s",
-        "genre": "Name: d",
-        "source": null,
-        "label": "g",
-        "publish_date": "1001-10-10",
-        "on_spotify": true
-      }
+      "#<Item:0x000001e33050a478>"
+    ]
+  },
+  {
+    "name": "e",
+    "items": [
+      "#<Item:0x000001e33050a428>"
+    ]
+  },
+  {
+    "name": "j",
+    "items": [
+      "Title: m,\n    Artist: h,\n    Genre: Name: j,\n    Source: k,\n    Label: y,\n    Publish Date: 1252-12-10,\n    On Spotify: true"
     ]
   }
 ]
