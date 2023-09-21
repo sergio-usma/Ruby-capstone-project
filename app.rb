@@ -29,6 +29,7 @@ class App
   def save_data
     save_music_albums
     save_genres
+    save_games
   end
 
   def load_music_albums
@@ -55,6 +56,10 @@ class App
     else
       puts 'Invalid JSON data format in the file.'
     end
+  end
+
+  def save_games
+    File.write('./data/games.json', JSON.pretty_generate(@games.map(&:to_hash)))
   end
 
   def save_music_albums
