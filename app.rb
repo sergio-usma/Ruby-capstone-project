@@ -8,7 +8,7 @@ require 'json'
 require 'fileutils'
 
 class App
-  attr_accessor :books, :item, :labels
+  attr_accessor :books, :item, :labels, :games, :authors
 
   def initialize
     FileUtils.mkdir_p('./data')
@@ -17,6 +17,7 @@ class App
     @music_albums = []
     @genres = []
     @games = []
+    @authors = []
     load_data
   end
 
@@ -109,15 +110,15 @@ class App
     when 1 then puts list_all_books
     when 2 then puts list_all_music_albums
     when 3 then puts 'List all movies'
-    when 4 then puts 'List all games'
+    when 4 then puts list_all_games
     when 5 then puts list_all_genres
     when 6 then puts list_all_labels
-    when 7 then puts 'List all authors'
+    when 7 then puts list_all_authors
     when 8 then puts 'List all sources'
     when 9 then puts add_book
     when 10 then puts add_music_album
     when 11 then puts 'Add a movie'
-    when 12 then puts 'Add a game'
+    when 12 then puts add_game
     when 13 then exit
     else
       puts 'Invalid input'
@@ -156,9 +157,9 @@ class App
     puts 'Enter first author\'s name'
     first_author_name = gets.chomp
     puts 'Enter second author\'s name'
-    second_author_name = gets.chomp
+    last_author_name = gets.chomp
     puts 'Enter genre'
-    gets.chomp
+    genre_name = gets.chomp
     puts 'Enter source'
     source = gets.chomp
     puts 'Enter label'
@@ -177,10 +178,17 @@ class App
       puts "New genre created: #{genre.name}"
     end
 
+    author = @authors.find { |a| a.first_author_name == first_author_name }
+    unless genre
+      author = Author.new(first_author_name, last_author_name)
+      @authors << author
+      puts "New genre created: #{genre.name}"
+    end
+
     game_params = {
       title: title,
       first_author_name: first_author_name,
-      second_author_name: second_author_name,
+      last_author_name: last_author_name,
       genre: genre,
       source: source,
       label: label,
@@ -237,7 +245,7 @@ class App
   def list_all_books
     book_counter = 1
     if @books.empty?
-      puts 'No books found'
+      puts 'No booksfound'
     else
       @books.each do |book|
         puts "#{book_counter}.
@@ -245,6 +253,21 @@ class App
         Cover state: #{book.cover_state} ,
         Publish date: #{book.publish_date}"
         book_counter += 1
+      end; nil
+    end
+  end
+
+  def list_all_games
+    game_counter = 1
+    if @games.empty?
+      puts 'No games found'
+    else
+      @games.each do |game|
+        puts "#{game_counter}
+        Title: \"#{game.title}\",
+        Multiplayer: #{game.multiplayer},
+        Publish Date: #{game.publish_date}"
+        game_counter += 1
       end; nil
     end
   end
@@ -269,6 +292,17 @@ class App
         "#{index + 1}. Name: #{genre.name}"
       end
       puts formatted_genres.join("\n")
+    end
+  end
+
+  def list_all_authors
+    if @authors.empty?
+      puts 'No authors found'
+    else
+      formatted_authors = @authors.each_with_index.map do |author, index|
+        "#{index + 1}. Name: #{author.first_author_name} #{author.last_author_name}"
+      end
+      puts formatted_authors.join("\n")
     end
   end
 
