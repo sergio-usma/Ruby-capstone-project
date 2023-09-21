@@ -16,4 +16,17 @@ class Game < Item
 
     super ? true : current_year - last_played_at.year > 2 ? true : false
   end
+
+  def to_hash
+    {
+      title: @title,
+      author: @author,
+      genre: @genre,
+      source: @source,
+      label: @label,
+      publish_date: @publish_date,
+      multiplayer: @multiplayer,
+      last_played_at: @last_played_at
+    }
+  end
 end

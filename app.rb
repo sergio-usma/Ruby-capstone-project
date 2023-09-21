@@ -24,12 +24,39 @@ class App
   def load_data
     load_music_albums
     load_genres
+    load_games
   end
 
   def save_data
     save_music_albums
     save_genres
     save_games
+  end
+
+  def load_games
+    return unless File.exist?('./data/games.json')
+
+    json_data = File.read('./data/games.json')
+    return if json_data.empty?
+
+    games_data_array = JSON.parse(json_data)
+
+    if games_data_array.is_a?(Array) && games_data_array.all? { |game_data| game_data.is_a?(Hash) }
+      @games = games_data_array.map do |game|
+        Game.new({
+          title: game['title'],
+          author: game['author'],
+          source: game['source'],
+          label: game['label'],
+          multiplayer: game['multiplayer'],
+          last_played_at: game['last_played_at'],
+          publish_date: game['publish_date']
+          }
+        )
+      end
+    else
+      puts 'Invalid JSON data format in the file'
+    end
   end
 
   def load_music_albums
@@ -91,6 +118,10 @@ class App
 
   def save_genres
     File.write('./data/genres.json', JSON.pretty_generate(@genres.map(&:to_hash)))
+  end
+
+  def save_authors
+    File.write('./data/authors.json', JSON.pretty_generate(@authors.map(&:to_hash)))
   end
 
   def run
@@ -195,6 +226,7 @@ class App
       first_author_name: first_author_name,
       last_author_name: last_author_name,
       genre: genre,
+      author: author,
       source: source,
       label: label,
       publish_date: publish_date,
@@ -205,6 +237,7 @@ class App
     game = Game.new(game_params)
     @games << game
     puts 'Game created successfully'
+    save_data
   end
 
   def add_music_album
