@@ -53,7 +53,7 @@ describe MusicAlbum do
       Artist: Sample Artist, Genre: Rock,
       Source: CD, Label: test,
       Publish Date: #{publish_date},
-      On Spotify: Yes"
+      On Spotify: True"
       expect(album.to_s).to eq(expected_string)
     end
   end
