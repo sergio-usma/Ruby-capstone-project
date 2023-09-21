@@ -19,7 +19,7 @@ class Genre
   def to_hash
     {
       name: @name,
-      items: @items.map(&:to_hash)
+      items: @items.map(&:to_s)
     }
   end
 end
