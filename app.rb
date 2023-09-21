@@ -116,6 +116,25 @@ class App
     end
   end
 
+  def load_authors
+    return unless File.exist?('./data/authors.json')
+
+    json_data = File.read('./data/authors.json')
+    return if json_data.empty?
+
+    @authors = JSON.parse(json_data).map do |author_data|
+      author = Author.new(author_data['first_name'], author_data['last_name'])
+
+      author_data['items'].each do |item_data|
+        item = Item.new({
+          title: item_data['title'],
+          author: author,
+          genre: item_data['genre']
+        })
+      end
+    end
+  end
+
   def save_genres
     File.write('./data/genres.json', JSON.pretty_generate(@genres.map(&:to_hash)))
   end
