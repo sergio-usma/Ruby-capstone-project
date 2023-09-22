@@ -303,9 +303,18 @@ class App
     label = gets.chomp
     puts 'Enter publish date in format yyyy-mm-dd'
     publish_date = gets.chomp
-    puts 'Is the album on Spotify? (true/false)'
-    on_spotify = gets.chomp.downcase == 'true'
+    puts 'Is the album on Spotify? (Y/N)'
+    user_input = gets.chomp.downcase
 
+    on_spotify = case user_input
+    when 'yes', 'y'
+      true
+      when 'no', 'n'
+      false
+      else
+      puts "Invalid input for Spotify status. Assuming 'No'"
+      false
+      end
     # Check if the genre already exists or create a new one
     genre = @genres.find { |g| g.name == genre_name }
     unless genre
