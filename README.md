@@ -168,33 +168,10 @@ I would like to express my heartfelt gratitude to [Microverse](https://github.co
 
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
-<!-- FAQ (optional) -->
-
-## ❓ FAQ (OPTIONAL) <a id="faq"></a>
-
-> Add at least 2 questions new developers would ask when they decide to use your project.
-
-- **How do I set up the project?**
-
-  - Clone the repository from GitHub.
-
-- **How can I contribute to the project?**
-
-  1. Fork the repository on GitHub.
-  2. Create a new branch for your changes using git checkout -b my-feature-branch.
-  3. Make your changes and commit them with descriptive commit messages.
-  4. Push your changes to your forked repository.
-  5. Submit a pull request to the original repository.
-  6. Wait for feedback and iterate on your changes as needed.
-
-<p align='right'>(<a href="#readme-top">back to top</a>)</p>
-
 <!-- LICENSE -->
 
 ## 📝 License <a id="license"></a>
 
 This project is [MIT](./LICENSE) licensed.
-
-_NOTE: we recommend using the [MIT license](https://choosealicense.com/licenses/mit/) - you can set it up quickly by [using templates available on GitHub](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-license-to-a-repository). You can also use [any other license](https://choosealicense.com/licenses/) if you wish._
 
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
