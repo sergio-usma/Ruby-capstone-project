@@ -106,10 +106,6 @@ class App
     @books = PreserveBooks.new.gets_books || []
   end
 
-  def save_books
-    PreserveBooks.new.save_books(@books)
-  end
-
   def save_games
     File.write('./data/games.json', JSON.pretty_generate(@games.map(&:to_hash)))
   end
@@ -151,11 +147,11 @@ class App
       author = Author.new(author_data['first_name'], author_data['last_name'])
 
       author_data['items'].each do |item_data|
-        item = Item.new({
+        item = Item.new(
           title: item_data['title'],
           author: author,
           genre: item_data['genre']
-        })
+        )
       end
     end
   end
@@ -224,19 +220,45 @@ class App
     title = gets.chomp
     puts 'Enter author'
     author = gets.chomp
+    puts 'Enter source'
+    source_name = gets.chomp
     puts 'Enter genre'
-    genre = gets.chomp
+    genre_name = gets.chomp
     puts 'Enter publisher'
     publisher = gets.chomp
-    puts 'Enter cover state'
-    cover_state = gets.chomp
+    puts 'It\'s the cover in good state? (Y/N)'
+    cover_state = gets.chomp.downcase == 'y' ? 'good' : 'bad'
     puts 'Enter publish date in format yyyy-mm-dd'
     publish_date = gets.chomp
-    book = Books.new(title: title, author: author, genre: genre, publisher: publisher, cover_state: cover_state,
-                     publish_date: publish_date)
+
+    genre = Genre.new(genre_name)
+
+    first_name, last_name = author.split
+
+    author = Author.new(first_name, last_name) unless @authors
+
+    source = Source.new(source_name)
+
+    unless @sources.include?(source)
+      @sources << source
+      @preserve_sources.save_sources(@sources)
+    end
+
+    book_args = {
+      title: title,
+      author: author,
+      genre: genre,
+      source: source,
+      publish_date: publish_date,
+      cover_state: cover_state,
+      publisher: publisher
+    }
+
+    book = Books.new(book_args)
     @books << book
+
+    PreserveBooks.new.save_books(@books)
     puts 'Book added successfully'
-    save_books
   end
 
   def add_game
@@ -344,7 +366,7 @@ class App
   def list_all_books
     book_counter = 1
     if @books.empty?
-      puts 'No booksfound'
+      puts 'No books-found'
     else
       @books.each do |book|
         puts "#{book_counter}.
