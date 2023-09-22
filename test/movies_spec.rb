@@ -10,7 +10,7 @@ describe Movies do
   let(:author) { Author.new('Lawrence', 'Kioko') }
   let(:source) { Source.new('DVD') }
   let(:label) { Label.new('Movie Title', 'Red') }
-  let(:publish_date) { '01-01-2010' }
+  let(:publish_date) { '2010-01-01' }
 
   subject(:movie) do
     described_class.new(
@@ -26,13 +26,14 @@ describe Movies do
   describe '#can_be_archived?' do
     context 'when the movie can be archived' do
       it 'returns true' do
-        expect(movie.can_be_archived?).to be(true)
+        expect(movie.send(:can_be_archived?)).to be(true)
       end
     end
-
+  
     context 'when the movie cannot be archived' do
       it 'returns false' do
         movie.silent = false
+        expect(movie.send(:can_be_archived?)).to be(false)
       end
     end
   end
