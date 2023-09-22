@@ -1,9 +1,9 @@
-require_relative '../classes/movies/movies'
-require_relative '../classes/item'
-require_relative '../classes/source'
-require_relative '../classes/genre'
 require_relative '../classes/author'
+require_relative '../classes/genre'
+require_relative '../classes/item'
 require_relative '../classes/label'
+require_relative '../classes/movies'
+require_relative '../classes/source'
 
 describe Movies do
   let(:genre) { Genre.new('Action') }
