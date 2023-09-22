@@ -136,11 +136,9 @@ rspec test
 
 ## 🔭 Future Features <a id="future-features"></a>
 
-> Describe 1 - 3 features you will add to the project.
-
-- [ ] **[new_feature_1]**
-- [ ] **[new_feature_2]**
-- [ ] **[new_feature_3]**
+- [ ] **[Search and Filter]**
+- [ ] **[Expand Class Types]**
+- [ ] **[Logging and Auditing]**
 
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
@@ -158,9 +156,7 @@ Feel free to check the [issues page](../../issues/).
 
 ## ⭐️ Show your support <a id="support"></a>
 
-> Write a message to encourage readers to support your project
-
-If you like this project, please consider supporting us! Your support helps us to continue developing and improving our project for everyone to enjoy. Whether it's a small donation, sharing the project with your friends, or contributing your skills and expertise, every little bit makes a huge difference. With your support, we can create something truly amazing together. Thank you for being a part of our community and helping us to make a difference!
+If you liked this project, give me a "Star" (clicking the star button at the beginning of this page), share this repo with your developer community or make your contributions.
 
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
@@ -168,9 +164,7 @@ If you like this project, please consider supporting us! Your support helps us t
 
 ## 🙏 Acknowledgments <a id="acknowledgements"></a>
 
-> Give credit to everyone who inspired your codebase.
-
-I would like to thank...
+I would like to express my heartfelt gratitude to [Microverse](https://github.com/microverseinc) for providing us with the opportunityto work on this project. and I would like to extend my appreciation to my fellow contributors who have played a significant role in making this project a successful. their dedication and collaboration have been invaluable.
 
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
