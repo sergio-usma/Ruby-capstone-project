@@ -1,3 +1,5 @@
+require 'json'
+
 class PreserveBooks
   def gets_books
     return [] unless File.exist?('./data/books.json')
