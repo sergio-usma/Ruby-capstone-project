@@ -62,6 +62,7 @@ Adiotionally, there's an schema.sql with tables representing the classes and the
 ## 🚀 Live Demo <a id="live-demo"></a>
 
 - Currently No Available Live Demo
+- Link to [video presentation](https://drive.google.com/file/d/1xJVeRh5obtrSWTyFWb3nxP7HMr0Xs8w3/view?usp=sharing)
 
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
