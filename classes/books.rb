@@ -21,8 +21,10 @@ class Books < Item
 
   def self.from_hash(hash)
     new(
-      genre: Genre.new(hash['genre']['genre_name']),
-      author: Author.new(hash['author']['first_name'], hash['author']['last_name']),
+      title: hash['title'],
+      author: hash['author'],
+      genre: hash['genre'],
+      source: hash['source'],
       publish_date: hash['publish_date'],
       cover_state: hash['cover_state'],
       publisher: hash['publisher']
