@@ -59,13 +59,9 @@ Adiotionally, there's an schema.sql with tables representing the classes and the
 
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
-<!-- LIVE DEMO -->
-
 ## 🚀 Live Demo <a id="live-demo"></a>
 
-> Add a link to your deployed project.
-
-- [Live Demo Link](https://google.com)
+- Currently No Available Live Demo
 
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
@@ -73,85 +69,39 @@ Adiotionally, there's an schema.sql with tables representing the classes and the
 
 ## 💻 Getting Started <a id="getting-started"></a>
 
-> Describe how a new developer could make use of your project.
-
-To get a local copy up and running, follow these steps.
-
 ### Prerequisites
 
-In order to run this project you need:
+In order to run this project you need to have:
 
-<!--
-Example command:
-
-```sh
- gem install rails
-```
- -->
+- Installed Ruby.
+- If you're using Windows, have installed WSL.
+- If you're using MacOS, an option is using UTM.
 
 ### Setup
 
-Clone this repository to your desired folder:
+To clone this repository to your desired folder, run the following command: <br>
 
-<!--
-Example commands:
-
-```sh
-  cd my-folder
-  git clone git@github.com:myaccount/my-project.git
 ```
---->
-
-### Install
-
-Install this project with:
-
-<!--
-Example command:
-
-```sh
-  cd my-project
-  gem install
+git clone https://github.com/sergio-usma/Ruby-capstone-project.git
 ```
---->
 
 ### Usage
 
-To run the project, execute the following command:
-
-<!--
-Example command:
-
-```sh
-  rails server
-```
---->
-
-### Run tests
-
-To run tests, run the following command:
-
-<!--
-Example command:
-
-```sh
-  bin/rails test test/models/article_test.rb
-```
---->
-
-### Deployment
-
-You can deploy this project using:
-
-<!--
-Example:
-
-```sh
+Initialize it with
 
 ```
- -->
+ruby main.rb
+```
 
-<p align='right'>(<a href="#readme-top">back to top</a>)</p>
+### Test
+
+To run the tests try the following command:
+
+```
+rspec test
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- AUTHORS -->
 
