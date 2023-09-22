@@ -149,14 +149,7 @@ class App
 
     @authors = JSON.parse(json_data).map do |author_data|
       author = Author.new(author_data['first_name'], author_data['last_name'])
-
-      author_data['items'].each do |item_data|
-        item = Item.new({
-          title: item_data['title'],
-          author: author,
-          genre: item_data['genre']
-        })
-      end
+      author
     end
   end
 
