@@ -2,11 +2,21 @@
   {
     "title": "Hollow Knight",
     "author": null,
-    "genre": "Name: test genre",
+    "genre": null,
     "source": "test source",
     "label": "test label",
     "publish_date": "2017-02-20",
     "multiplayer": true,
     "last_played_at": "2020-03-20"
+  },
+  {
+    "title": "test game",
+    "author": null,
+    "genre": "Name: test genre",
+    "source": "test source",
+    "label": "test label",
+    "publish_date": "2017-02-20",
+    "multiplayer": true,
+    "last_played_at": "2020-02-20"
   }
 ]
