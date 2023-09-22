@@ -107,13 +107,28 @@ rspec test
 
 ## 👥 Authors <a id="authors"></a>
 
-> Mention all of the collaborators of this project.
-
-👤 **Author**
+👤 **Sergio Usma**
 
 - GitHub: [@sergio-usma](https://github.com/sergio-usma)
 - Twitter: [@VonUsma](https://twitter.com/vonusma)
 - LinkedIn: [Sergio Andres Usma](https://www.linkedin.com/in/sergiousma/)
+
+👤 **Henok Mekonnen**
+
+- GitHub: [@githubhandle](https://github.com/henask12)
+- Twitter: [@twitterhandle](https://twitter.com/henok_mekonnen3)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/henokmekonnen1)
+
+👤 **Lawrence Muema**
+
+- GitHub: [@kidd254](https://github.com/Kidd254)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/lawrence-muema-kioko)
+
+👤 **Javier Vargas**
+
+- GitHub: [@Javivy](https://github.com/Javivy)
+- LinkedIn: [Javier Vargas](https://www.linkedin.com/in/javier-alejandro-vargas-ortega)
+- Twitter [@Javivy_2803](https://twitter.com/Javivy_2803)
 
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
