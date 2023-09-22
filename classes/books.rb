@@ -4,6 +4,7 @@ class Books < Item
 
   def initialize(params = {})
     super(params)
+    @title = params[:title]
     @cover_state = params[:cover_state]
     @publisher = params[:publisher]
   end
