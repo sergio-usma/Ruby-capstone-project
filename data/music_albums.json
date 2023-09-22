@@ -1,11 +1,11 @@
 [
   {
-    "title": "a",
-    "author": "s",
-    "genre": "Name: d",
-    "source": null,
-    "label": "g",
-    "publish_date": "22-10-2022",
+    "title": "Test",
+    "author": "Test",
+    "genre": "Name: Test",
+    "source": "Test",
+    "label": "Test",
+    "publish_date": "2022-11-10",
     "on_spotify": true
   }
 ]

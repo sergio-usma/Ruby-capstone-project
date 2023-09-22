@@ -8,6 +8,27 @@ class Books < Item
     @publisher = params[:publisher]
   end
 
+  def to_hash
+    {
+      title: @title,
+      author: @author,
+      genre: @genre,
+      publish_date: @publish_date,
+      cover_state: @cover_state,
+      publisher: @publisher
+    }
+  end
+
+  def self.from_hash(hash)
+    new(
+      genre: Genre.new(hash['genre']['genre_name']),
+      author: Author.new(hash['author']['first_name'], hash['author']['last_name']),
+      publish_date: hash['publish_date'],
+      cover_state: hash['cover_state'],
+      publisher: hash['publisher']
+    )
+  end
+
   private
 
   def can_be_archived?
