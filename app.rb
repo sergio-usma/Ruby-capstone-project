@@ -256,7 +256,7 @@ class App
     publish_date = gets.chomp
     puts 'Is the game multiplayer? (true/false)'
     multiplayer = gets.chomp.downcase == 'true'
-    puts 'Last time played? (dd-mm-yyyy)'
+    puts 'Last time played? (yyyy-mm-dd)'
     last_played_at = gets.chomp
 
     genre = @genres.find { |g| g.name == genre_name }

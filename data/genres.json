@@ -2,7 +2,13 @@
   {
     "name": "Test",
     "items": [
-      "#<Item:0x000002249b6b78f0>"
+      "#<Item:0x0000013f5d3f9510>"
+    ]
+  },
+  {
+    "name": "test genre",
+    "items": [
+
     ]
   }
 ]
