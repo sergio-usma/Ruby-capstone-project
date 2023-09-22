@@ -290,7 +290,7 @@ class App
     source = gets.chomp
     puts 'Enter label'
     label = gets.chomp
-    puts 'Enter publish date in format dd-mm-yyyy'
+    puts 'Enter publish date in format yyyy-dd-mm'
     publish_date = gets.chomp
     puts 'Is the album on Spotify? (true/false)'
     on_spotify = gets.chomp.downcase == 'true'

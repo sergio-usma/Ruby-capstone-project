@@ -20,7 +20,7 @@ class MusicAlbum < Item
     Source: #{@source},
     Label: #{@label},
     Publish Date: #{@publish_date},
-    On Spotify: #{@on_spotify ? 'Yes' : 'No'}"
+    On Spotify: #{@on_spotify ? 'true' : 'false'}"
   end
 
   def to_hash
