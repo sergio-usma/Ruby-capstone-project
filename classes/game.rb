@@ -8,7 +8,7 @@ class Game < Item
     super(params)
     @title = params[:title]
     @multiplayer = params[:multiplayer]
-    @last_played_at = last_played_at
+    @last_played_at = (Date.strptime(params[:last_played_at], '%Y-%m-%d') if params[:last_played_at])
   end
 
   def can_be_archived?

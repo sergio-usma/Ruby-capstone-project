@@ -44,7 +44,7 @@ describe Game do
     end
 
     it 'correctly sets the publish_date' do
-      expect(game.publish_date).to eq((Date.strptime(game_data[:publish_date], '%d-%m-%Y') if game_data[:publish_date]))
+      expect(game.publish_date).to eq((Date.strptime(game_data[:publish_date], '%Y-%m-%d') if game_data[:publish_date]))
     end
 
     it 'correctly sets the multiplayer attribute' do
