@@ -32,7 +32,7 @@
 **Catalog of my things** is an application that allows the user to add books, music albums, and games this information is saved in separated JSON files, and the user can display this information in the console.
 
 Adiotionally, there's an schema.sql with tables representing the classes and their associations.
-![image](./catalog_of_my_things.png)
+![image](assets/catalog_of_my_things.png)
 
 ## 🛠 Built With <a id="built-with"></a>
 
