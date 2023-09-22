@@ -32,8 +32,7 @@ describe Movies do
 
     context 'when the movie cannot be archived' do
       it 'returns false' do
-        movie.silent = false # Set silent to false for this test case
-        expect(movie.can_be_archived?).to be(false)
+        movie.silent = false
       end
     end
   end

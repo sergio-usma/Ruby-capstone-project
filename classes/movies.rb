@@ -12,6 +12,10 @@ class Movies < Item
     super && @silent == true
   end
 
+  def to_s
+    ""
+  end
+
   def to_hash
     {
       'genre' => {

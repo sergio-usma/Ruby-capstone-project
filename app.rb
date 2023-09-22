@@ -399,18 +399,20 @@ class App
       puts '-' * 80
       puts "%-5s %-30s %-20s %-15s %-15s %-10s" % ["Index", "Title", "Director", "Genre", "Release Date", "Silent"]
       puts '-' * 80
-
+  
+      # Iterate through the movies and display them, but only if there are movies to display.
       @movies.each_with_index do |movie, index|
         title = movie.label.respond_to?(:title) ? movie.label.title : "Unknown"
         artist = "#{movie.author.first_name} #{movie.author.last_name}"
         genre = movie.genre.respond_to?(:genre_name) ? movie.genre.genre_name : "Unknown"
         release_date = movie.publish_date.nil? ? 'Unknown' : movie.publish_date.to_s
         silent = movie.silent ? 'Yes' : 'No'
-
+  
         puts "%-5d %-30s %-20s %-15s %-15s %-10s" % [index + 1, title, artist, genre, release_date, silent]
       end
     end
   end
+  
 
   def list_all_sources
     if @sources.empty?
