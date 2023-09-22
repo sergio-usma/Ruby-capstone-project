@@ -8,14 +8,17 @@ class Game < Item
     super(params)
     @title = params[:title]
     @multiplayer = params[:multiplayer]
-    puts(last_played_at)
-    @last_played_at = (Date.strptime(params[:last_played_at], '%d-%m-%Y') if params[:last_played_at].is_a?(String))
+    @last_played_at = last_played_at
   end
 
   def can_be_archived?
     current_year = Time.now.year
 
-    super ? true : current_year - last_played_at.year > 2 ? true : false
+    if super
+      true
+    else
+      current_year - last_played_at.year > 2
+    end
   end
 
   def to_hash

@@ -1,16 +1,15 @@
+require 'fileutils'
+require 'json'
+require_relative 'classes/author'
 require_relative 'classes/books'
+require_relative 'classes/game'
+require_relative 'classes/genre'
 require_relative 'classes/item'
 require_relative 'classes/label'
-require_relative 'classes/genre'
+require_relative 'classes/movies'
 require_relative 'classes/music_album'
-require_relative 'classes/game'
-require 'json'
-require 'fileutils'
-
-require_relative 'classes/movies/movies'
-require_relative 'classes/movies/preserve_movies'
+require_relative 'classes/preserve_movies'
 require_relative 'classes/preserve_sources'
-require_relative 'classes/author'
 require_relative 'classes/source'
 
 # rubocop:disable all
@@ -38,12 +37,14 @@ class App
     load_movies
     load_sources
     load_games
+    load_authors
   end
 
   def save_data
     save_music_albums
     save_genres
     save_games
+    save_authors
   end
 
   def load_games
@@ -239,11 +240,11 @@ class App
     source = gets.chomp
     puts 'Enter label'
     label = gets.chomp
-    puts 'Enter publish date'
+    puts 'Enter publish date (yyyy-mm-dd)'
     publish_date = gets.chomp
     puts 'Is the game multiplayer? (true/false)'
     multiplayer = gets.chomp.downcase == 'true'
-    puts 'Last time played? (dd/mm/yy)'
+    puts 'Last time played? (yyyy-mm-dd)'
     last_played_at = gets.chomp
 
     genre = @genres.find { |g| g.name == genre_name }
@@ -253,11 +254,11 @@ class App
       puts "New genre created: #{genre.name}"
     end
 
-    author = @authors.find { |a| a.first_author_name == first_author_name }
-    unless genre
+    author = @authors.find { |a| a.first_name == first_author_name }
+    unless author
       author = Author.new(first_author_name, last_author_name)
       @authors << author
-      puts "New genre created: #{genre.name}"
+      puts "New author created: #{author.first_name}"
     end
 
     game_params = {
@@ -290,7 +291,7 @@ class App
     source = gets.chomp
     puts 'Enter label'
     label = gets.chomp
-    puts 'Enter publish date in format yyyy-dd-mm'
+    puts 'Enter publish date in format dd-mm-yyyy'
     publish_date = gets.chomp
     puts 'Is the album on Spotify? (true/false)'
     on_spotify = gets.chomp.downcase == 'true'
@@ -471,7 +472,7 @@ class App
       puts 'No authors found'
     else
       formatted_authors = @authors.each_with_index.map do |author, index|
-        "#{index + 1}. Name: #{author.first_author_name} #{author.last_author_name}"
+        "#{index + 1}. Name: #{author.first_name} #{author.last_name}"
       end
       puts formatted_authors.join("\n")
     end
