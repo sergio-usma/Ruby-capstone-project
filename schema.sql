@@ -16,11 +16,26 @@ CREATE TABLE genres (
   name VARCHAR(255)
 );
 
+CREATE TABLE authors (
+  id SERIAL PRIMARY KEY,
+  first_name VARCHAR(255)
+  last_name VARCHAR(255)
+);
+
 CREATE TABLE Movies (
     item_id INT PRIMARY KEY,
     director VARCHAR(255),
     release_date DATE,
     silent BOOLEAN,
+    FOREIGN KEY (item_id) REFERENCES Item(id)
+);
+
+CREATE TABLE Games (
+    title VARCHAR(255),
+    item_id INT PRIMARY KEY,
+    publish_date DATE,
+    multiplayer BOOLEAN,
+    last_played_at DATE,
     FOREIGN KEY (item_id) REFERENCES Item(id)
 );
 
