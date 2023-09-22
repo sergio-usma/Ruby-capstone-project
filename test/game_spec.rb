@@ -16,8 +16,8 @@ describe Game do
       genre: genre,
       label: label,
       source: source,
-      publish_date: '27-02-2017',
-      last_played_at: '17-03-2020',
+      publish_date: '2017-02-20',
+      last_played_at: '2017-03-20',
       multiplayer: true
     }
   end

@@ -8,10 +8,6 @@ class Movies < Item
     @silent = args[:silent]
   end
 
-  def can_be_archived?
-    super && @silent == true
-  end
-
   def to_s
     ""
   end
@@ -46,5 +42,10 @@ class Movies < Item
       publish_date: hash['publish_date'],
       silent: hash['silent']
     )
+  end
+
+  private
+  def can_be_archived?
+    super && @silent == true
   end
 end
