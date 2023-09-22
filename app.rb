@@ -1,16 +1,15 @@
+require 'fileutils'
+require 'json'
+require_relative 'classes/author'
 require_relative 'classes/books'
+require_relative 'classes/game'
+require_relative 'classes/genre'
 require_relative 'classes/item'
 require_relative 'classes/label'
-require_relative 'classes/genre'
+require_relative 'classes/movies'
 require_relative 'classes/music_album'
-require_relative 'classes/game'
-require 'json'
-require 'fileutils'
-
-require_relative 'classes/movies/movies'
-require_relative 'classes/movies/preserve_movies'
+require_relative 'classes/preserve_movies'
 require_relative 'classes/preserve_sources'
-require_relative 'classes/author'
 require_relative 'classes/source'
 
 # rubocop:disable all
@@ -243,7 +242,7 @@ class App
     publish_date = gets.chomp
     puts 'Is the game multiplayer? (true/false)'
     multiplayer = gets.chomp.downcase == 'true'
-    puts 'Last time played? (dd/mm/yy)'
+    puts 'Last time played? (dd-mm-yyyy)'
     last_played_at = gets.chomp
 
     genre = @genres.find { |g| g.name == genre_name }
@@ -290,7 +289,7 @@ class App
     source = gets.chomp
     puts 'Enter label'
     label = gets.chomp
-    puts 'Enter publish date in format yyyy-dd-mm'
+    puts 'Enter publish date in format dd-mm-yyyy'
     publish_date = gets.chomp
     puts 'Is the album on Spotify? (true/false)'
     on_spotify = gets.chomp.downcase == 'true'
