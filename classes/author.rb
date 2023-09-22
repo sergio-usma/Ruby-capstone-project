@@ -15,10 +15,10 @@ class Author
     @items << item
   end
 
-#   def to_hash
-#     {
-#       first_name: @first_name,
-#       last_name: @last_name
-#     }
-#   end
+  def to_hash
+    {
+      first_name: @first_name,
+      last_name: @last_name
+    }
+  end
 end

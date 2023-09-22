@@ -39,6 +39,7 @@ class App
     load_sources
     load_games
     load_books
+    load_authors
   end
 
   def save_data
@@ -46,6 +47,7 @@ class App
     save_genres
     save_games
     save_books
+    save_authors
   end
 
   def load_games
@@ -250,11 +252,11 @@ class App
     source = gets.chomp
     puts 'Enter label'
     label = gets.chomp
-    puts 'Enter publish date in format yyyy-mm-dd'
+    puts 'Enter publish date (yyyy-mm-dd)'
     publish_date = gets.chomp
     puts 'Is the game multiplayer? (true/false)'
     multiplayer = gets.chomp.downcase == 'true'
-    puts 'Last time played? (yyyy-mm-dd)'
+    puts 'Last time played? (dd-mm-yyyy)'
     last_played_at = gets.chomp
 
     genre = @genres.find { |g| g.name == genre_name }
@@ -264,11 +266,11 @@ class App
       puts "New genre created: #{genre.name}"
     end
 
-    author = @authors.find { |a| a.first_author_name == first_author_name }
-    unless genre
+    author = @authors.find { |a| a.first_name == first_author_name }
+    unless author
       author = Author.new(first_author_name, last_author_name)
       @authors << author
-      puts "New genre created: #{genre.name}"
+      puts "New author created: #{author.first_name}"
     end
 
     game_params = {
@@ -424,7 +426,6 @@ class App
       end
     end
   end
-  
 
   def list_all_sources
     if @sources.empty?
@@ -484,7 +485,7 @@ class App
       puts 'No authors found'
     else
       formatted_authors = @authors.each_with_index.map do |author, index|
-        "#{index + 1}. Name: #{author.first_author_name} #{author.last_author_name}"
+        "#{index + 1}. Name: #{author.first_name} #{author.last_name}"
       end
       puts formatted_authors.join("\n")
     end

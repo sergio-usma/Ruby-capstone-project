@@ -24,7 +24,7 @@ class Game < Item
   def to_hash
     {
       title: @title,
-      author: @author,
+      author: "#{@author.first_name} #{@author.last_name}",
       genre: @genre,
       source: @source,
       label: @label,
