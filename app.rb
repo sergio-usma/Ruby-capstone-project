@@ -217,17 +217,49 @@ class App
     title = gets.chomp
     puts 'Enter author'
     author = gets.chomp
+    puts 'Enter source'
+    source_name = gets.chomp
     puts 'Enter genre'
     genre = gets.chomp
+    genre_name = gets.chomp
     puts 'Enter publisher'
     publisher = gets.chomp
     puts 'Enter cover state'
     cover_state = gets.chomp
+    puts 'It\'s the cover in good state? (Y/N)'
+    cover_state = gets.chomp.downcase == 'y' ? 'good' : 'bad'
     puts 'Enter publish date in format yyyy-mm-dd'
     publish_date = gets.chomp
     book = Books.new(title: title, author: author, genre: genre, publisher: publisher, cover_state: cover_state,
                      publish_date: publish_date)
+
+    genre = Genre.new(genre_name)
+
+    first_name, last_name = author.split
+
+    author = Author.new(first_name, last_name) unless @authors
+
+    source = Source.new(source_name)
+
+    unless @sources.include?(source)
+      @sources << source
+      @preserve_sources.save_sources(@sources)
+    end
+
+    book_args = {
+      title: title,
+      author: author,
+      genre: genre,
+      source: source,
+      publish_date: publish_date,
+      cover_state: cover_state,
+      publisher: publisher
+    }
+
+    book = Books.new(book_args)
     @books << book
+
+    PreserveBooks.new.save_books(@books)
     puts 'Book added successfully'
     save_books
   end
