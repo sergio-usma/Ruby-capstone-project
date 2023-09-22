@@ -1,107 +1,61 @@
 <a id="readme-top"></a>
 
-<!--
-HOW TO USE:
-This is an example of how you may give instructions on setting up your project locally.
-
-Modify this file to match your project and remove sections that don't apply.
-
-REQUIRED SECTIONS:
-- Table of Contents
-- About the Project
-  - Built With
-  - Live Demo
-- Getting Started
-- Authors
-- Future Features
-- Contributing
-- Show your support
-- Acknowledgements
-- License
-
-OPTIONAL SECTIONS:
-- FAQ
-
-After you're finished please remove all the comments and instructions!
--->
-
 <div align="center">
-  <!-- You are encouraged to replace this logo with your own! Otherwise you can also remove it. -->
-  <img src="./assets/logo.png" alt="logo" width="140"  height="auto" />
-  <br/>
-
-<h3><b>Microverse README Template</b></h3>
-
+<h3><b>Catalog of My Things</b></h3>
 </div>
-
-<!-- TABLE OF CONTENTS -->
 
 # 📗 Table of Contents
 
 - [📖 About the Project](#about-project)
-    - [🛠 Built With](#built-with)
-        - [Tech Stack](#tech-stack)
-        - [Key Features](#key-features)
-    - [🚀 Live Demo](#live-demo)
+  - [🛠 Built With](#built-with)
+    - [Tech Stack](#tech-stack)
+    - [Key Features](#key-features)
+  - [🚀 Live Demo](#live-demo)
 - [💻 Getting Started](#getting-started)
-    - [Setup](#setup)
-    - [Prerequisites](#prerequisites)
-    - [Install](#install)
-    - [Usage](#usage)
-    - [Run tests](#run-tests)
-    - [Deployment](#deployment)
+  - [Setup](#setup)
+  - [Prerequisites](#prerequisites)
+  - [Install](#install)
+  - [Usage](#usage)
+  - [Run tests](#run-tests)
+  - [Deployment](#deployment)
 - [👥 Authors](#authors)
 - [🔭 Future Features](#future-features)
 - [🤝 Contributing](#contributing)
 - [⭐️ Show your support](#support)
 - [🙏 Acknowledgements](#acknowledgements)
-- [❓ FAQ (OPTIONAL)](#faq)
 - [📝 License](#license)
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 [your_project_name] <a id="about-project"></a>
+# 📖 Catalog of My Things <a id="about-project"></a>
 
-> Describe your project in 1 or 2 sentences.
+**Catalog of my things** is an application that allows the user to add books, music albums, and games this information is saved in separated JSON files, and the user can display this information in the console.
 
-**[your_project__name]** is a...
+Adiotionally, there's an schema.sql with tables representing the classes and their associations.
+![image](./catalog_of_my_things.png)
 
 ## 🛠 Built With <a id="built-with"></a>
 
 ### Tech Stack <a id="tech-stack"></a>
 
-> Describe the tech stack and include only the relevant sections that apply to your project.
-
-<details>
-  <summary>Client</summary>
   <ul>
-    <li><a href="https://reactjs.org/">React.js</a></li>
-  </ul>
-</details>
-
-<details>
-  <summary>Server</summary>
-  <ul>
-    <li><a href="https://expressjs.com/">Express.js</a></li>
-  </ul>
-</details>
-
-<details>
-<summary>Database</summary>
-  <ul>
+    <li><a href="https://www.ruby-lang.org/en/">Ruby</a></li>
     <li><a href="https://www.postgresql.org/">PostgreSQL</a></li>
   </ul>
-</details>
 
 <!-- Features -->
 
 ### Key Features <a id="key-features"></a>
 
-> Describe between 1-3 key features of the application.
-
-- **[key_feature_1]**
-- **[key_feature_2]**
-- **[key_feature_3]**
+- **Designclasses following a UML diagram**
+- **Modular Code Structure**
+- **Constructor Initialization**
+- **Full Method Implementation**
+- **Dynamic Archiving Logic**
+- **Console Application**
+- **User-Friendly Interaction**
+- **Data Preservation**
+- **Schema Definition**
 
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
@@ -211,7 +165,6 @@ Example:
 - Twitter: [@VonUsma](https://twitter.com/vonusma)
 - LinkedIn: [Sergio Andres Usma](https://www.linkedin.com/in/sergiousma/)
 
-
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FUTURE FEATURES -->
@@ -264,16 +217,16 @@ I would like to thank...
 
 - **How do I set up the project?**
 
-    - Clone the repository from GitHub.
+  - Clone the repository from GitHub.
 
 - **How can I contribute to the project?**
 
-    1. Fork the repository on GitHub.
-    2. Create a new branch for your changes using git checkout -b my-feature-branch.
-    3. Make your changes and commit them with descriptive commit messages.
-    4. Push your changes to your forked repository.
-    5. Submit a pull request to the original repository.
-    6. Wait for feedback and iterate on your changes as needed.
+  1. Fork the repository on GitHub.
+  2. Create a new branch for your changes using git checkout -b my-feature-branch.
+  3. Make your changes and commit them with descriptive commit messages.
+  4. Push your changes to your forked repository.
+  5. Submit a pull request to the original repository.
+  6. Wait for feedback and iterate on your changes as needed.
 
 <p align='right'>(<a href="#readme-top">back to top</a>)</p>
 
