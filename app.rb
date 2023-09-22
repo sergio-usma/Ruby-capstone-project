@@ -8,6 +8,7 @@ require_relative 'classes/item'
 require_relative 'classes/label'
 require_relative 'classes/movies'
 require_relative 'classes/music_album'
+require_relative 'classes/preserve_books'
 require_relative 'classes/preserve_movies'
 require_relative 'classes/preserve_sources'
 require_relative 'classes/source'
@@ -18,7 +19,7 @@ class App
 
   def initialize
     FileUtils.mkdir_p('./data')
-    @books = []
+    @books = PreserveBooks.new.gets_books
     @labels = []
     @music_albums = []
     @genres = []
@@ -37,12 +38,14 @@ class App
     load_movies
     load_sources
     load_games
+    load_books
   end
 
   def save_data
     save_music_albums
     save_genres
     save_games
+    save_books
   end
 
   def load_games
@@ -95,6 +98,14 @@ class App
     else
       puts 'Invalid JSON data format in the file.'
     end
+  end
+
+  def load_books
+    @books = PreserveBooks.new.gets_books || []
+  end
+
+  def save_books
+    PreserveBooks.new.save_books(@books)
   end
 
   def save_games
@@ -217,12 +228,13 @@ class App
     publisher = gets.chomp
     puts 'Enter cover state'
     cover_state = gets.chomp
-    puts 'Enter publish date in format dd-mm-yyyy'
+    puts 'Enter publish date in format yyyy-mm-dd'
     publish_date = gets.chomp
     book = Books.new(title: title, author: author, genre: genre, publisher: publisher, cover_state: cover_state,
                      publish_date: publish_date)
     @books << book
     puts 'Book added successfully'
+    save_books
   end
 
   def add_game
@@ -238,11 +250,11 @@ class App
     source = gets.chomp
     puts 'Enter label'
     label = gets.chomp
-    puts 'Enter publish date'
+    puts 'Enter publish date in format yyyy-mm-dd'
     publish_date = gets.chomp
     puts 'Is the game multiplayer? (true/false)'
     multiplayer = gets.chomp.downcase == 'true'
-    puts 'Last time played? (dd-mm-yyyy)'
+    puts 'Last time played? (yyyy-mm-dd)'
     last_played_at = gets.chomp
 
     genre = @genres.find { |g| g.name == genre_name }
@@ -289,7 +301,7 @@ class App
     source = gets.chomp
     puts 'Enter label'
     label = gets.chomp
-    puts 'Enter publish date in format dd-mm-yyyy'
+    puts 'Enter publish date in format yyyy-mm-dd'
     publish_date = gets.chomp
     puts 'Is the album on Spotify? (true/false)'
     on_spotify = gets.chomp.downcase == 'true'
@@ -344,7 +356,7 @@ class App
     source_name = gets.chomp
     puts 'Enter movie label:'
     label = gets.chomp
-    puts 'Enter movie publish date in format dd-mm-yyyy:'
+    puts 'Enter movie publish date in format yyyy-mm-dd:'
     publish_date = gets.chomp
     puts 'Is the movie silent? (Y/N):'
     silent_input = gets.chomp.downcase

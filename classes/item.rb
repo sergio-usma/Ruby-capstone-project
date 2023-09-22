@@ -8,7 +8,7 @@ class Item
     @author = params[:author]
     @label = params[:label]
     @source = params[:source]
-    @publish_date = (Date.strptime(params[:publish_date], '%d-%m-%Y') if params[:publish_date])
+    @publish_date = (Date.strptime(params[:publish_date], '%Y-%m-%d') if params[:publish_date])
     @archived = false
   end
 

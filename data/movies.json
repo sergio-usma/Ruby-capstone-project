@@ -1,20 +1,20 @@
 [
   {
     "genre": {
-      "genre_name": "THRILLER"
+      "genre_name": "Test"
     },
     "author": {
-      "first_name": "WARNER",
-      "last_name": "BROS"
+      "first_name": "Test",
+      "last_name": null
     },
     "source": {
-      "source_name": "NETFLIX"
+      "source_name": "Test"
     },
     "label": {
-      "title": "HHH",
+      "title": "Test",
       "color": null
     },
-    "publish_date": "22-12-2012",
-    "silent": false
+    "publish_date": "2022-11-10",
+    "silent": true
   }
 ]
