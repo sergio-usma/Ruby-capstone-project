@@ -224,8 +224,6 @@ class App
     genre_name = gets.chomp
     puts 'Enter publisher'
     publisher = gets.chomp
-    puts 'Enter cover state'
-    cover_state = gets.chomp
     puts 'It\'s the cover in good state? (Y/N)'
     cover_state = gets.chomp.downcase == 'y' ? 'good' : 'bad'
     puts 'Enter publish date in format yyyy-mm-dd'
