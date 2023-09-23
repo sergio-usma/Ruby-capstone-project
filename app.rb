@@ -299,7 +299,7 @@ class App
 
     book_args = {
       title: title,
-      author: author,
+      author: author.first_name,
       genre: genre,
       source: source,
       publish_date: publish_date,
