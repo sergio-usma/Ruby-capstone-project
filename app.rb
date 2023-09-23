@@ -220,7 +220,6 @@ class App
     puts 'Enter source'
     source_name = gets.chomp
     puts 'Enter genre'
-    genre = gets.chomp
     genre_name = gets.chomp
     puts 'Enter publisher'
     publisher = gets.chomp
