@@ -364,10 +364,12 @@ class App
   def list_all_books
     book_counter = 1
     if @books.empty?
-      puts 'No booksfound'
+      puts 'No books-found'
     else
       @books.each do |book|
         puts "#{book_counter}.
+        Title: \"#{book.title}\",
+        Genre: #{book.genre},
         Publisher: \"#{book.publisher}\",
         Cover state: #{book.cover_state} ,
         Publish date: #{book.publish_date}"
