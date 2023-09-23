@@ -225,7 +225,7 @@ class App
   end
 
   def load_authors
-    @sources = PreserveAuthors.new.gets_authors || []
+    @sources = PreserveAuthors.new.authors || []
   end
 
   def menu_prompt

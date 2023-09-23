@@ -2,7 +2,7 @@ require 'json'
 require_relative '../classes/author'
 
 class PreserveAuthors
-  def gets_authors
+  def authors
     return [] unless File.exist?('./data/authors.json')
 
     authors = []
@@ -25,15 +25,20 @@ class PreserveAuthors
   def save_authors(authors)
     return if authors.empty?
 
-    authors_data = { authors: authors.map { |author| author.to_hash } }
     file_path = './data/authors.json'
+    existing_authors = []
 
-    unless File.exist?(file_path)
-      File.open(file_path, 'w') {}
+    if File.exist?(file_path)
+      file_contents = File.read(file_path)
+      existing_data = JSON.parse(file_contents)
+      existing_authors = existing_data['authors'] if existing_data['authors'].is_a?(Array)
     end
 
-    File.open(file_path, 'w') do |file|
-      file.puts(JSON.generate(authors_data))
+    combined_authors = existing_authors + authors.map(&:to_hash)
+    authors_data = { authors: combined_authors }
+
+    File.open(file_path, 'w') do |output_file|
+      output_file.puts(JSON.generate(authors_data))
     end
   end
 end
