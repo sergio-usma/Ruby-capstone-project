@@ -228,8 +228,6 @@ class App
     cover_state = gets.chomp.downcase == 'y' ? 'good' : 'bad'
     puts 'Enter publish date in format yyyy-mm-dd'
     publish_date = gets.chomp
-    book = Books.new(title: title, author: author, genre: genre, publisher: publisher, cover_state: cover_state,
-                     publish_date: publish_date)
 
     genre = Genre.new(genre_name)
 
@@ -445,8 +443,7 @@ class App
       puts '-' * 80
       puts "%-5s %-30s %-20s %-15s %-15s %-10s" % ["Index", "Title", "Director", "Genre", "Release Date", "Silent"]
       puts '-' * 80
-  
-      # Iterate through the movies and display them, but only if there are movies to display.
+
       @movies.each_with_index do |movie, index|
         title = movie.label.respond_to?(:title) ? movie.label.title : "Unknown"
         artist = "#{movie.author.first_name} #{movie.author.last_name}"
