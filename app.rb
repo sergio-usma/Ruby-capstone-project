@@ -9,8 +9,10 @@ require_relative 'classes/label'
 require_relative 'classes/movies'
 require_relative 'classes/music_album'
 require_relative 'storage/preserve_books'
+require_relative 'storage/preserve_games'
 require_relative 'storage/preserve_movies'
 require_relative 'storage/preserve_sources'
+require_relative 'storage/preserve_authors'
 require_relative 'classes/source'
 
 # rubocop:disable all
@@ -28,7 +30,8 @@ class App
     @sources = []
     @preserve_sources = PreserveSources.new
     @games = []
-    @authors = []
+    @preserve_games = PreserveGames.new
+    @preserve_authors = PreserveAuthors.new
     load_data
   end
 
@@ -37,7 +40,6 @@ class App
     load_genres
     load_movies
     load_sources
-    load_games
     load_books
     load_authors
   end
@@ -45,7 +47,6 @@ class App
   def save_data
     save_music_albums
     save_genres
-    save_games
     save_books
     save_authors
   end
@@ -177,6 +178,14 @@ class App
     @sources = PreserveSources.new.gets_sources || []
   end
 
+  def load_games
+    @games = PreserveGames.new.gets_games || []
+  end
+
+  def load_authors
+    @sources = PreserveAuthors.new.gets_authors || []
+  end
+
   def menu_prompt
     puts [
       '1 - List all books', '2 - List all music albums', '3 - List all movies', '4 - List of games',
@@ -286,11 +295,9 @@ class App
       puts "New genre created: #{genre.name}"
     end
 
-    author = @authors.find { |a| a.first_name == first_author_name }
-    unless author
-      author = Author.new(first_author_name, last_author_name)
+    unless @authors.include?(first_author_name)
       @authors << author
-      puts "New author created: #{author.first_name}"
+      @preserve_authors.save_authors(@authors)
     end
 
     game_params = {
@@ -309,7 +316,7 @@ class App
     game = Game.new(game_params)
     @games << game
     puts 'Game created successfully'
-    save_data
+    @preserve_games.save_games(@games)
   end
 
   def add_music_album
