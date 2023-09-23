@@ -8,9 +8,9 @@ require_relative 'classes/item'
 require_relative 'classes/label'
 require_relative 'classes/movies'
 require_relative 'classes/music_album'
-require_relative 'classes/preserve_books'
-require_relative 'classes/preserve_movies'
-require_relative 'classes/preserve_sources'
+require_relative 'storage/preserve_books'
+require_relative 'storage/preserve_movies'
+require_relative 'storage/preserve_sources'
 require_relative 'classes/source'
 
 # rubocop:disable all

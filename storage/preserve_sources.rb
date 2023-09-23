@@ -1,5 +1,5 @@
 require 'json'
-require_relative 'source'
+require_relative '../classes/source'
 
 class PreserveSources
   def gets_sources
