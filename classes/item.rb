@@ -33,6 +33,11 @@ class Item
     genre.items.push(self) unless genre.items.include?(self)
   end
 
+  def add_source=(source)
+    @source = source
+    source.items.push(self) unless source.items.include?(self)
+  end
+
   private
 
   attr_reader :archived
