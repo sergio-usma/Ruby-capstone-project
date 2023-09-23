@@ -30,6 +30,7 @@ class App
     @sources = []
     @preserve_sources = PreserveSources.new
     @games = []
+    @authors = []
     @preserve_games = PreserveGames.new
     @preserve_authors = PreserveAuthors.new
     load_data
@@ -158,8 +159,20 @@ class App
     File.write('./data/genres.json', JSON.pretty_generate(@genres.map(&:to_hash)))
   end
 
-  def save_authors
-    File.write('./data/authors.json', JSON.pretty_generate(@authors.map(&:to_hash)))
+  def save_authors(authors)
+    return if authors.empty?
+
+    authors_data = { authors: authors.map { |author| author.to_hash } }
+    file_path = './data/authors.json'
+  
+    # Check if the file exists, and create it if it doesn't
+    unless File.exist?(file_path)
+      File.open(file_path, 'w') {}
+    end
+  
+    File.open(file_path, 'w') do |file|
+      file.puts(JSON.generate(authors_data))
+    end
   end
 
   def run
@@ -240,8 +253,13 @@ class App
     genre = Genre.new(genre_name)
 
     first_name, last_name = author.split
+    author = @authors.find { |a| a.first_name == first_name && a.last_name == last_name }
 
-    author = Author.new(first_name, last_name) unless @authors
+    unless author
+      author = Author.new(first_name, last_name)
+      @authors << author
+      @preserve_authors.save_authors(@authors) # Save the updated authors list
+    end
 
     source = Source.new(source_name)
 
