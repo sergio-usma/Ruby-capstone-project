@@ -31,6 +31,7 @@ class App
     @preserve_sources = PreserveSources.new
     @games = []
     @authors = []
+    @labels = []
     @preserve_games = PreserveGames.new
     @preserve_authors = PreserveAuthors.new
     load_data
@@ -43,13 +44,14 @@ class App
     load_sources
     load_books
     load_authors
+    load_labels
   end
 
   def save_data
     save_music_albums
     save_genres
     save_books
-    save_authors
+    save_authors(@authors)
   end
 
   def load_games
@@ -174,7 +176,34 @@ class App
       file.puts(JSON.generate(authors_data))
     end
   end
-
+  def save_labels
+    return if @labels.empty?
+  
+    labels_data = @labels.map { |label| { title: label.title, color: label.color } }
+    file_path = './data/labels.json'
+  
+    # Check if the file exists, and create it if it doesn't
+    unless File.exist?(file_path)
+      File.open(file_path, 'w') {}
+    end
+  
+    File.open(file_path, 'w') do |file|
+      file.puts(JSON.pretty_generate(labels_data))
+    end
+  end
+  def load_labels
+    return unless File.exist?('./data/labels.json')
+  
+    json_data = File.read('./data/labels.json')
+    return if json_data.empty?
+  
+    label_data_array = JSON.parse(json_data)
+  
+    @labels = label_data_array.map do |label_data|
+      Label.new(label_data['title'], label_data['color'])
+    end
+  end
+  
   def run
     puts ['Welcome to the Library', '']
     menu_prompt
@@ -314,6 +343,7 @@ class App
     end
 
     unless @authors.include?(first_author_name)
+      author = Author.new(first_author_name, last_author_name)
       @authors << author
       @preserve_authors.save_authors(@authors)
     end
@@ -347,7 +377,9 @@ class App
     puts 'Enter source'
     source = gets.chomp
     puts 'Enter label'
-    label = gets.chomp
+    label_name  = gets.chomp
+    puts 'Enter label color (default is black):'
+    label_color = gets.chomp 
     puts 'Enter publish date in format yyyy-mm-dd'
     publish_date = gets.chomp
     puts 'Is the album on Spotify? (Y/N)'
@@ -370,18 +402,26 @@ class App
       puts "New genre created: #{genre.name}"
     end
 
+    label = @labels.find { |l| l.title == label_name }
+unless label
+  label = Label.new(label_name, label_color) # Provide both title and color
+  @labels << label
+  puts "New label created: #{label.title} (Color: #{label.color})"
+end
+
     music_album_params = {
       title: title,
       author: author,
       genre: genre,
       source: source,
-      label: label,
+      label: label.title,
       publish_date: publish_date,
       on_spotify: on_spotify
     }
     music_album = MusicAlbum.new(music_album_params)
     @music_albums << music_album
     genre.add_item(music_album)
+    save_labels
     puts 'Music album added successfully'
     save_data
   end
@@ -550,9 +590,10 @@ class App
     if @labels.empty?
       puts 'No labels found'
     else
-      @labels.each do |label|
-        puts "Title: #{label.title}, Color: #{label.color}"
+      formatted_labels = @labels.each_with_index.map do |label, index|
+        "#{index + 1}. Title: #{label.title}, Color: #{label.color}"
       end
+      puts formatted_labels.join("\n")
     end
   end
 end
