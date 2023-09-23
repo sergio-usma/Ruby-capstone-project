@@ -1,5 +1,5 @@
 require 'json'
-require_relative 'source'
+require_relative '../classes/source'
 
 class PreserveSources
   def gets_sources
@@ -19,7 +19,9 @@ class PreserveSources
   def save_sources(sources)
     return if sources.empty?
 
-    sources_data = { sources: sources.map(&:source_name) }
+    valid_sources = sources.select { |source| source.is_a?(Source) }
+
+    sources_data = { sources: valid_sources.map(&:source_name) }
     File.open('./data/sources.json', 'w') do |file|
       file.puts(JSON.generate(sources_data))
     end

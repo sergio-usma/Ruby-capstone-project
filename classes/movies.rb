@@ -1,5 +1,3 @@
-require_relative '../item'
-
 class Movies < Item
   attr_reader :archived
   attr_accessor :silent
@@ -10,8 +8,8 @@ class Movies < Item
     @silent = args[:silent]
   end
 
-  def can_be_archived?
-    super && @silent == true
+  def to_s
+    ''
   end
 
   def to_hash
@@ -44,5 +42,11 @@ class Movies < Item
       publish_date: hash['publish_date'],
       silent: hash['silent']
     )
+  end
+
+  private
+
+  def can_be_archived?
+    super && @silent == true
   end
 end

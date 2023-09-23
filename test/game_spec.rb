@@ -16,8 +16,8 @@ describe Game do
       genre: genre,
       label: label,
       source: source,
-      publish_date: '27-02-2017',
-      last_played_at: '17-03-2020',
+      publish_date: '2017-02-20',
+      last_played_at: '2017-03-20',
       multiplayer: true
     }
   end
@@ -44,7 +44,7 @@ describe Game do
     end
 
     it 'correctly sets the publish_date' do
-      expect(game.publish_date).to eq((Date.strptime(game_data[:publish_date], '%d-%m-%Y') if game_data[:publish_date]))
+      expect(game.publish_date).to eq((Date.strptime(game_data[:publish_date], '%Y-%m-%d') if game_data[:publish_date]))
     end
 
     it 'correctly sets the multiplayer attribute' do

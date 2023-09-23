@@ -22,6 +22,19 @@ CREATE TABLE authors (
   last_name VARCHAR(255)
 );
 
+CREATE TABLE Books (
+  item_id INT PRIMARY KEY,
+  publisher VARCHAR(255),
+  cover_state VARCHAR(50),
+  FOREIGN KEY (item_id) REFERENCES Item(id)
+);
+
+CREATE TABLE Label (
+   id INT PRIMARY KEY AUTO_INCREMENT,
+   title VARCHAR(255),
+   color VARCHAR(20)
+);
+
 CREATE TABLE Movies (
     item_id INT PRIMARY KEY,
     director VARCHAR(255),

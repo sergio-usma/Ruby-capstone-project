@@ -1,16 +1,18 @@
+require 'fileutils'
+require 'json'
+require_relative 'classes/author'
 require_relative 'classes/books'
+require_relative 'classes/game'
+require_relative 'classes/genre'
 require_relative 'classes/item'
 require_relative 'classes/label'
-require_relative 'classes/genre'
+require_relative 'classes/movies'
 require_relative 'classes/music_album'
-require_relative 'classes/game'
-require 'json'
-require 'fileutils'
-
-require_relative 'classes/movies/movies'
-require_relative 'classes/movies/preserve_movies'
-require_relative 'classes/preserve_sources'
-require_relative 'classes/author'
+require_relative 'storage/preserve_books'
+require_relative 'storage/preserve_games'
+require_relative 'storage/preserve_movies'
+require_relative 'storage/preserve_sources'
+require_relative 'storage/preserve_authors'
 require_relative 'classes/source'
 
 # rubocop:disable all
@@ -19,7 +21,7 @@ class App
 
   def initialize
     FileUtils.mkdir_p('./data')
-    @books = []
+    @books = PreserveBooks.new.gets_books
     @labels = []
     @music_albums = []
     @genres = []
@@ -29,6 +31,9 @@ class App
     @preserve_sources = PreserveSources.new
     @games = []
     @authors = []
+    @labels = []
+    @preserve_games = PreserveGames.new
+    @preserve_authors = PreserveAuthors.new
     load_data
   end
 
@@ -37,13 +42,16 @@ class App
     load_genres
     load_movies
     load_sources
-    load_games
+    load_books
+    load_authors
+    load_labels
   end
 
   def save_data
     save_music_albums
     save_genres
-    save_games
+    save_books
+    save_authors(@authors)
   end
 
   def load_games
@@ -98,6 +106,14 @@ class App
     end
   end
 
+  def load_books
+    @books = PreserveBooks.new.gets_books || []
+  end
+
+  def save_books
+    PreserveBooks.new.save_books(@books)
+  end
+
   def save_games
     File.write('./data/games.json', JSON.pretty_generate(@games.map(&:to_hash)))
   end
@@ -137,14 +153,7 @@ class App
 
     @authors = JSON.parse(json_data).map do |author_data|
       author = Author.new(author_data['first_name'], author_data['last_name'])
-
-      author_data['items'].each do |item_data|
-        item = Item.new({
-          title: item_data['title'],
-          author: author,
-          genre: item_data['genre']
-        })
-      end
+      author
     end
   end
 
@@ -152,10 +161,49 @@ class App
     File.write('./data/genres.json', JSON.pretty_generate(@genres.map(&:to_hash)))
   end
 
-  def save_authors
-    File.write('./data/authors.json', JSON.pretty_generate(@authors.map(&:to_hash)))
-  end
+  def save_authors(authors)
+    return if authors.empty?
 
+    authors_data = { authors: authors.map { |author| author.to_hash } }
+    file_path = './data/authors.json'
+  
+    # Check if the file exists, and create it if it doesn't
+    unless File.exist?(file_path)
+      File.open(file_path, 'w') {}
+    end
+  
+    File.open(file_path, 'w') do |file|
+      file.puts(JSON.generate(authors_data))
+    end
+  end
+  def save_labels
+    return if @labels.empty?
+  
+    labels_data = @labels.map { |label| { title: label.title, color: label.color } }
+    file_path = './data/labels.json'
+  
+    # Check if the file exists, and create it if it doesn't
+    unless File.exist?(file_path)
+      File.open(file_path, 'w') {}
+    end
+  
+    File.open(file_path, 'w') do |file|
+      file.puts(JSON.pretty_generate(labels_data))
+    end
+  end
+  def load_labels
+    return unless File.exist?('./data/labels.json')
+  
+    json_data = File.read('./data/labels.json')
+    return if json_data.empty?
+  
+    label_data_array = JSON.parse(json_data)
+  
+    @labels = label_data_array.map do |label_data|
+      Label.new(label_data['title'], label_data['color'])
+    end
+  end
+  
   def run
     puts ['Welcome to the Library', '']
     menu_prompt
@@ -170,6 +218,14 @@ class App
 
   def load_sources
     @sources = PreserveSources.new.gets_sources || []
+  end
+
+  def load_games
+    @games = PreserveGames.new.gets_games || []
+  end
+
+  def load_authors
+    @sources = PreserveAuthors.new.authors || []
   end
 
   def menu_prompt
@@ -212,18 +268,51 @@ class App
     title = gets.chomp
     puts 'Enter author'
     author = gets.chomp
+    puts 'Enter source'
+    source_name = gets.chomp
     puts 'Enter genre'
-    genre = gets.chomp
+    genre_name = gets.chomp
     puts 'Enter publisher'
     publisher = gets.chomp
-    puts 'Enter cover state'
-    cover_state = gets.chomp
-    puts 'Enter publish date in format dd-mm-yyyy'
+    puts 'It\'s the cover in good state? (Y/N)'
+    cover_state = gets.chomp.downcase == 'y' ? 'good' : 'bad'
+    puts 'Enter publish date in format yyyy-mm-dd'
     publish_date = gets.chomp
-    book = Books.new(title: title, author: author, genre: genre, publisher: publisher, cover_state: cover_state,
-                     publish_date: publish_date)
+
+    genre = Genre.new(genre_name)
+
+    first_name, last_name = author.split
+    author = @authors.find { |a| a.first_name == first_name && a.last_name == last_name }
+
+    unless author
+      author = Author.new(first_name, last_name)
+      @authors << author
+      @preserve_authors.save_authors(@authors) # Save the updated authors list
+    end
+
+    source = Source.new(source_name)
+
+    unless @sources.include?(source)
+      @sources << source
+      @preserve_sources.save_sources(@sources)
+    end
+
+    book_args = {
+      title: title,
+      author: author.first_name,
+      genre: genre,
+      source: source,
+      publish_date: publish_date,
+      cover_state: cover_state,
+      publisher: publisher
+    }
+
+    book = Books.new(book_args)
     @books << book
+
+    PreserveBooks.new.save_books(@books)
     puts 'Book added successfully'
+    save_books
   end
 
   def add_game
@@ -239,11 +328,11 @@ class App
     source = gets.chomp
     puts 'Enter label'
     label = gets.chomp
-    puts 'Enter publish date'
+    puts 'Enter publish date (yyyy-mm-dd)'
     publish_date = gets.chomp
     puts 'Is the game multiplayer? (true/false)'
     multiplayer = gets.chomp.downcase == 'true'
-    puts 'Last time played? (dd/mm/yy)'
+    puts 'Last time played? (yyyy-mm-dd)'
     last_played_at = gets.chomp
 
     genre = @genres.find { |g| g.name == genre_name }
@@ -253,11 +342,10 @@ class App
       puts "New genre created: #{genre.name}"
     end
 
-    author = @authors.find { |a| a.first_author_name == first_author_name }
-    unless genre
+    unless @authors.include?(first_author_name)
       author = Author.new(first_author_name, last_author_name)
       @authors << author
-      puts "New genre created: #{genre.name}"
+      @preserve_authors.save_authors(@authors)
     end
 
     game_params = {
@@ -276,7 +364,7 @@ class App
     game = Game.new(game_params)
     @games << game
     puts 'Game created successfully'
-    save_data
+    @preserve_games.save_games(@games)
   end
 
   def add_music_album
@@ -289,12 +377,23 @@ class App
     puts 'Enter source'
     source = gets.chomp
     puts 'Enter label'
-    label = gets.chomp
-    puts 'Enter publish date in format yyyy-dd-mm'
+    label_name  = gets.chomp
+    puts 'Enter label color (default is black):'
+    label_color = gets.chomp 
+    puts 'Enter publish date in format yyyy-mm-dd'
     publish_date = gets.chomp
-    puts 'Is the album on Spotify? (true/false)'
-    on_spotify = gets.chomp.downcase == 'true'
+    puts 'Is the album on Spotify? (Y/N)'
+    user_input = gets.chomp.downcase
 
+    on_spotify = case user_input
+    when 'yes', 'y'
+      true
+      when 'no', 'n'
+      false
+      else
+      puts "Invalid input for Spotify status. Assuming 'No'"
+      false
+      end
     # Check if the genre already exists or create a new one
     genre = @genres.find { |g| g.name == genre_name }
     unless genre
@@ -303,18 +402,26 @@ class App
       puts "New genre created: #{genre.name}"
     end
 
+    label = @labels.find { |l| l.title == label_name }
+unless label
+  label = Label.new(label_name, label_color) # Provide both title and color
+  @labels << label
+  puts "New label created: #{label.title} (Color: #{label.color})"
+end
+
     music_album_params = {
       title: title,
       author: author,
       genre: genre,
       source: source,
-      label: label,
+      label: label.title,
       publish_date: publish_date,
       on_spotify: on_spotify
     }
     music_album = MusicAlbum.new(music_album_params)
     @music_albums << music_album
     genre.add_item(music_album)
+    save_labels
     puts 'Music album added successfully'
     save_data
   end
@@ -322,10 +429,12 @@ class App
   def list_all_books
     book_counter = 1
     if @books.empty?
-      puts 'No booksfound'
+      puts 'No books-found'
     else
       @books.each do |book|
         puts "#{book_counter}.
+        Title: \"#{book.title}\",
+        Genre: #{book.genre},
         Publisher: \"#{book.publisher}\",
         Cover state: #{book.cover_state} ,
         Publish date: #{book.publish_date}"
@@ -345,7 +454,7 @@ class App
     source_name = gets.chomp
     puts 'Enter movie label:'
     label = gets.chomp
-    puts 'Enter movie publish date in format dd-mm-yyyy:'
+    puts 'Enter movie publish date in format yyyy-mm-dd:'
     publish_date = gets.chomp
     puts 'Is the movie silent? (Y/N):'
     silent_input = gets.chomp.downcase
@@ -407,7 +516,7 @@ class App
         genre = movie.genre.respond_to?(:genre_name) ? movie.genre.genre_name : "Unknown"
         release_date = movie.publish_date.nil? ? 'Unknown' : movie.publish_date.to_s
         silent = movie.silent ? 'Yes' : 'No'
-
+  
         puts "%-5d %-30s %-20s %-15s %-15s %-10s" % [index + 1, title, artist, genre, release_date, silent]
       end
     end
@@ -471,7 +580,7 @@ class App
       puts 'No authors found'
     else
       formatted_authors = @authors.each_with_index.map do |author, index|
-        "#{index + 1}. Name: #{author.first_author_name} #{author.last_author_name}"
+        "#{index + 1}. Name: #{author.first_name} #{author.last_name}"
       end
       puts formatted_authors.join("\n")
     end
@@ -481,9 +590,10 @@ class App
     if @labels.empty?
       puts 'No labels found'
     else
-      @labels.each do |label|
-        puts "Title: #{label.title}, Color: #{label.color}"
+      formatted_labels = @labels.each_with_index.map do |label, index|
+        "#{index + 1}. Title: #{label.title}, Color: #{label.color}"
       end
+      puts formatted_labels.join("\n")
     end
   end
 end
