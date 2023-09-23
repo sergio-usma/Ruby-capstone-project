@@ -19,8 +19,14 @@ class PreserveAuthors
   def save_authors(authors)
     return if authors.empty?
 
-    authors_data = { authors: authors.map(&:author_name) }
-    File.open('./data/authors.json', 'w') do |file|
+    authors_data = { authors: authors.map { |author| author.to_hash } }
+    file_path = './data/authors.json'
+
+    unless File.exist?(file_path)
+      File.open(file_path, 'w') {}
+    end
+  
+    File.open(file_path, 'w') do |file|
       file.puts(JSON.generate(authors_data))
     end
   end
