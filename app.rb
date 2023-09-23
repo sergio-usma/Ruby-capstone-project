@@ -225,7 +225,7 @@ class App
   end
 
   def load_authors
-    @sources = PreserveAuthors.new.authors || []
+    @authors = PreserveAuthors.new.authors || []
   end
 
   def menu_prompt
@@ -523,19 +523,22 @@ end
   end
 
   def list_all_sources
-    if @sources.empty?
+    source_objects = @sources.select { |item| item.is_a?(Source) }
+  
+    if source_objects.empty?
       puts "\nSorry, you haven't added any sources yet"
     else
       puts "\nSources:"
       puts '-' * 80
       puts "%-5s %-30s" % ["Index", "Source Name"]
       puts '-' * 80
-
-      @sources.each_with_index do |source, index|
+  
+      source_objects.each_with_index do |source, index|
         puts "%-5d %-30s" % [index + 1, source.source_name]
       end
     end
   end
+  
 
   def list_all_games
     game_counter = 1

@@ -18,12 +18,12 @@ class PreserveSources
 
   def save_sources(sources)
     return if sources.empty?
-
+  
     valid_sources = sources.select { |source| source.is_a?(Source) }
-
-    sources_data = { sources: valid_sources.map(&:source_name) }
+  
+    sources_data = { 'sources' => valid_sources.map(&:source_name) } # 'sources' key should be present
     File.open('./data/sources.json', 'w') do |file|
       file.puts(JSON.generate(sources_data))
     end
-  end
+  end  
 end

@@ -1,0 +1,42 @@
+[
+  {
+    "title": "shreds of tenderness",
+    "author": "#<Author:0x00000228213f4580>",
+    "genre": "Name: novel",
+    "publish_date": "2010-03-25",
+    "cover_state": "good",
+    "publisher": "eee pulishers"
+  },
+  {
+    "title": "TEST",
+    "author": "#<Author:0x00000228213f39a0>",
+    "genre": "Name: TEST",
+    "publish_date": "2023-04-23",
+    "cover_state": "good",
+    "publisher": "TEST"
+  },
+  {
+    "title": "Kifo Kisimani",
+    "author": "#<Author:0x0000022c2b5745c8>",
+    "genre": "Name: jikijj",
+    "publish_date": "2013-09-09",
+    "cover_state": "good",
+    "publisher": "yfyhi"
+  },
+  {
+    "title": "test2",
+    "author": "#<Author:0x0000026931854430>",
+    "genre": "Name: test2",
+    "publish_date": "2004-04-09",
+    "cover_state": "good",
+    "publisher": "test2"
+  },
+  {
+    "title": "The Great Gatsby",
+    "author": "#<Author:0x00000266ceaf39d0>",
+    "genre": "Name: hjhkkj",
+    "publish_date": "2015-06-28",
+    "cover_state": "good",
+    "publisher": "hukjl"
+  }
+]

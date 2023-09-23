@@ -16,5 +16,41 @@
     },
     "publish_date": "2018-11-12",
     "silent": false
+  },
+  {
+    "genre": {
+      "genre_name": "thriller"
+    },
+    "author": {
+      "first_name": "Warner",
+      "last_name": "Bros"
+    },
+    "source": {
+      "source_name": "From Friend"
+    },
+    "label": {
+      "title": "Manifest",
+      "color": null
+    },
+    "publish_date": "0012-11-01",
+    "silent": false
+  },
+  {
+    "genre": {
+      "genre_name": "Comedy"
+    },
+    "author": {
+      "first_name": "Jennifer",
+      "last_name": "Lawrence"
+    },
+    "source": {
+      "source_name": "Netflix"
+    },
+    "label": {
+      "title": "No hard Feelings",
+      "color": null
+    },
+    "publish_date": "2023-05-19",
+    "silent": false
   }
 ]
