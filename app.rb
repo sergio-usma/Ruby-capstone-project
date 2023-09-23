@@ -220,9 +220,6 @@ class App
     @sources = PreserveSources.new.gets_sources || []
   end
 
-  def load_games
-    @games = PreserveGames.new.gets_games || []
-  end
 
   def load_authors
     @sources = PreserveAuthors.new.authors || []
@@ -292,7 +289,7 @@ class App
 
     source = Source.new(source_name)
 
-    unless @sources.include?(source)
+    unless source.is_a?(Source) && !@sources.include?(source)
       @sources << source
       @preserve_sources.save_sources(@sources)
     end
