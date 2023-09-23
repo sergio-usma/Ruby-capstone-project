@@ -45,6 +45,7 @@ class Movies < Item
   end
 
   private
+
   def can_be_archived?
     super && @silent == true
   end

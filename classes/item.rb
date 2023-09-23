@@ -42,5 +42,4 @@ class Item
 
     current_year - @publish_date.year > 10
   end
-
 end

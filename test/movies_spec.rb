@@ -29,7 +29,7 @@ describe Movies do
         expect(movie.send(:can_be_archived?)).to be(true)
       end
     end
-  
+
     context 'when the movie cannot be archived' do
       it 'returns false' do
         movie.silent = false
